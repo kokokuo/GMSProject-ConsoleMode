@@ -17,13 +17,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     gms.cpp \
-    textmenu.cpp \
-    gmsmenu.cpp \
-    homemenu.cpp
+    textStateMenu.cpp \
+    homeStateMenu.cpp \
+    gmsStateMenu.cpp \
+    xmlStateMenu.cpp
 
 HEADERS += \
     gms.h \
-    textmenu.h \
-    gmsmenu.h \
-    TextMenuIdEnum.h \
-    homemenu.h
+    textStateMenu.h \
+    homeStateMenu.h \
+    gmsStateMenu.h \
+    textMenuIdEnum.h \
+    xmlStateMenu.h

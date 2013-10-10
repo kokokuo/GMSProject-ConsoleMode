@@ -1,22 +1,24 @@
 #ifndef HOMEMENU_H
 #define HOMEMENU_H
 
-#include "textmenu.h"
+#include "textStateMenu.h"
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
 
 class GMS;
 
-class HomeMenu : public TextMenu
+class HomeStateMenu : public TextStateMenu
 {
 public:
-    HomeMenu(GMS *gms);
+    HomeStateMenu(GMS *gms);
     void DisplayMenu();
     void Update();
 
 private:
-    const int COMMAND_NUMBER =2;
+    bool IsFirstCome;
+    static const int COMMAND_NUMBER = 2;
+
 };
 
 #endif // HOMEMENU_H

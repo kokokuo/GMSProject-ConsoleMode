@@ -9,5 +9,8 @@ int main(int argc, char *argv[])
     GMS graphicModelingSystem;
     graphicModelingSystem.RunGMS();
 
-    return a.exec();
+    //This application would actually exit by itself after all the tasks have been finished if this line was not there.
+    //return a.exec();
+
+    return 0;
 }
