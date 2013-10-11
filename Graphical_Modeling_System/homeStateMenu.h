@@ -2,6 +2,7 @@
 #define HOMEMENU_H
 
 #include "textStateMenu.h"
+#include "textMenuKey.h"
 #include <iostream>
 #include <stdlib.h>
 using namespace std;

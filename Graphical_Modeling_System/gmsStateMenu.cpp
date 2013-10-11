@@ -6,6 +6,7 @@ GMSStateMenu::GMSStateMenu(GMS *gms) : TextStateMenu(gms)
 {
 }
 void GMSStateMenu::DisplayMenu(){
+    cout << endl;
     cout << "Graphical Modeling System" <<endl;
     cout << "[1] New/Load a XML record" <<endl;
     cout << "[2] Add component" <<endl;
@@ -19,10 +20,10 @@ void GMSStateMenu::Update(){
         switch(command)
         {
             case 1:
-                this->gms->SwitchToOtherMenu(XMLMenuKey);
+                this->gms->SwitchToOtherMenu(TextMenuKey::XMLMenuKey);
                 break;
             case 4:
-                this->gms->SwitchToOtherMenu(HomeMenuKey);
+                this->gms->SwitchToOtherMenu(TextMenuKey::HomeMenuKey);
                 break;
         }
     }

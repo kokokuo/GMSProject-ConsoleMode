@@ -25,7 +25,7 @@ void HomeStateMenu::Update(){
         switch(command)
         {
             case 1:
-                this->gms->SwitchToOtherMenu(GMSMenuKey);
+                this->gms->SwitchToOtherMenu(TextMenuKey::GMSMenuKey);
                 break;
             case 2:
                 this->gms->SetCloseSystem();

@@ -2,11 +2,12 @@
 #define GMS_H
 
 #include <map>
-#include "textMenuIdEnum.h"
+#include "textMenuKey.h"
 #include "textStateMenu.h"
 #include "homeStateMenu.h"
 #include "gmsStateMenu.h"
 #include "xmlStateMenu.h"
+#include "xmlManager.h"
 
 using namespace std;
 
@@ -17,19 +18,20 @@ public:
     GMS();
     void RunGMS();
     void SetCloseSystem();
-    void SwitchToOtherMenu(TextMenuIdEnum Key); //切換至別的選單State
+    void SwitchToOtherMenu(int Key); //切換至別的選單State
 
     //創造XML檔案
-    void CreateXMLFormatRecord(string path);
+    int CreateXMLFormatRecord(string path);
     //載入XML檔案
-    void LoadXMLFormatRecord(string path);
+    bool LoadXMLFormatRecord(string path);
 
 private:
 
-    map<TextMenuIdEnum,TextStateMenu*> textMenuManager;
+    map<int,TextStateMenu*> textMenuManager;
     TextStateMenu *currentTextMenu; //switch to current mode
     int command;
     bool isWorking;
+    XMLManager xmlManager;
 };
 
 #endif // GMS_H

@@ -20,12 +20,17 @@ SOURCES += main.cpp \
     textStateMenu.cpp \
     homeStateMenu.cpp \
     gmsStateMenu.cpp \
-    xmlStateMenu.cpp
+    xmlStateMenu.cpp \
+    xmlErrorCode.cpp \
+    textMenuKey.cpp \
+    xmlManager.cpp
 
 HEADERS += \
     gms.h \
     textStateMenu.h \
     homeStateMenu.h \
     gmsStateMenu.h \
-    textMenuIdEnum.h \
-    xmlStateMenu.h
+    xmlStateMenu.h \
+    xmlErrorCode.h \
+    textMenuKey.h \
+    xmlManager.h

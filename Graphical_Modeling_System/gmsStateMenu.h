@@ -3,7 +3,7 @@
 
 
 #include "textStateMenu.h"
-
+#include "textMenuKey.h"
 class GMS;
 
 class GMSStateMenu : public TextStateMenu

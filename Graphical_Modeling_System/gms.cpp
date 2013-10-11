@@ -4,10 +4,10 @@
 GMS::GMS()
 {
     isWorking = true;
-    this->textMenuManager.insert(map<TextMenuIdEnum,TextStateMenu*>::value_type(HomeMenuKey,new HomeStateMenu(this)));
-    this->textMenuManager.insert(map<TextMenuIdEnum,TextStateMenu*>::value_type(GMSMenuKey,new GMSStateMenu(this)));
-    this->textMenuManager.insert(map<TextMenuIdEnum,TextStateMenu*>::value_type(XMLMenuKey,new XMLStateMenu(this)));
-    this->currentTextMenu = textMenuManager[HomeMenuKey];
+    this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::HomeMenuKey,new HomeStateMenu(this)));
+    this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GMSMenuKey,new GMSStateMenu(this)));
+    this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::XMLMenuKey,new XMLStateMenu(this)));
+    this->currentTextMenu = textMenuManager[TextMenuKey::HomeMenuKey];
 }
 void GMS::RunGMS(){
     while(this->isWorking){
@@ -19,6 +19,14 @@ void GMS::RunGMS(){
 void GMS::SetCloseSystem(){
     this->isWorking = false;
 }
-void GMS::SwitchToOtherMenu(TextMenuIdEnum Key){
+void GMS::SwitchToOtherMenu(int Key){
     this->currentTextMenu = textMenuManager[Key];
+}
+
+int GMS::CreateXMLFormatRecord(string path){
+    return xmlManager.CreateXML(path);
+}
+bool GMS::LoadXMLFormatRecord(string path){
+    //return xmlManager.LoadXML(path);
+
 }
