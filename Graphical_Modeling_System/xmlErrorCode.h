@@ -6,8 +6,10 @@ class XMLErrorCode
 {
 public:
     static int OK;
-    static int HasExisted;
-    static int PathError;
+    static int Create_HasExisted;
+    static int Create_PathError;
+    static int Open_NotExist;
+    static int IOError;
 };
 
 #endif // XMLERRORCODE_H

@@ -62,11 +62,17 @@ void XMLStateMenu::HandleXML(int commandCode){
         else
             cout << "Record Loaded." <<endl;
     }
-    else if(errorCode == XMLErrorCode::HasExisted){
+    else if(errorCode == XMLErrorCode::Create_HasExisted){
         cout << "Record of this path and name already exist, please select another path or record name." <<endl;
     }
+    else if(errorCode == XMLErrorCode::Create_PathError){
+           cout << "This path not exist." <<endl;
+    }
+    else if(errorCode == XMLErrorCode::Open_NotExist){
+        cout << "Record of this path and name not exist, please select another path or record name." <<endl;
+    }
     else{
-        cout << "This path not exist." <<endl;
+        cout << "Open may have some error,try again " << endl;
     }
 
 }

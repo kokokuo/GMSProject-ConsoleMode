@@ -7,6 +7,7 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <fstream>
 
 using namespace std;
 
@@ -18,7 +19,8 @@ public:
     int LoadXML(string filenName);
 
 private:
-    QFile *xmlFile;
+    fstream xmlFile;
+    string xmlFilePath;
 };
 
 #endif // XMLMANAGER_H

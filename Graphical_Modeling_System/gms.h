@@ -23,7 +23,7 @@ public:
     //創造XML檔案
     int CreateXMLFormatRecord(string path);
     //載入XML檔案
-    bool LoadXMLFormatRecord(string path);
+    int LoadXMLFormatRecord(string path);
 
 private:
 

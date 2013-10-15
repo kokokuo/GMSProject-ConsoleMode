@@ -17,7 +17,7 @@ bool TextStateMenu::CheckInput(const int maxInputOption){
 void TextStateMenu::GetInput(){
     string input;
     cin >> input;
+
     cin.ignore(INT_MAX,'\n');
     this->command = atoi(input.c_str());
-
 }
