@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     xmlStateMenu.cpp \
     xmlErrorCode.cpp \
     textMenuKey.cpp \
-    xmlManager.cpp
+    xmlManager.cpp \
+    component.cpp
 
 HEADERS += \
     gms.h \
@@ -33,4 +34,5 @@ HEADERS += \
     xmlStateMenu.h \
     xmlErrorCode.h \
     textMenuKey.h \
-    xmlManager.h
+    xmlManager.h \
+    component.h

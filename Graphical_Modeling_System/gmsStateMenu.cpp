@@ -22,6 +22,9 @@ void GMSStateMenu::Update(){
             case 1:
                 this->gms->SwitchToOtherMenu(TextMenuKey::XMLMenuKey);
                 break;
+            case 2:
+                AddComponents();
+                break;
             case 4:
                 this->gms->SwitchToOtherMenu(TextMenuKey::HomeMenuKey);
                 break;
@@ -30,5 +33,43 @@ void GMSStateMenu::Update(){
     else{
         cout << "\nOption not Exist,please select again\n"<<endl ;
     }
+
+}
+
+int GMSStateMenu::GetComponentInput(){
+    int componentChoice;
+    string input;
+    while(true){
+        cin >> input;
+        cin.ignore(INT_MAX,'\n');
+        componentChoice = atoi(input.c_str());
+        if( componentChoice != 0 &&  componentChoice <= this->COMPONENTS_NUMBER)
+          break;
+
+    }
+    return componentChoice;
+}
+void GMSStateMenu::AddComponents(){
+
+
+    if(this->gms->HasLoadedXMLRecord()){
+        cout << "Select component type" << endl;
+        cout << "[1]Cube [2]Pyramid [3]Sphere" << endl;
+        cout << "> " <<endl;
+
+        int choice = GetComponentInput();
+        string componetName;
+        getline(cin,componetName);
+
+
+    }
+    else{
+        cout << "No XML record loaded" << endl;
+    }
+
+}
+
+void GMSStateMenu::DisplayComponents(){
+
 
 }

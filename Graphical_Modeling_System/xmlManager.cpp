@@ -2,6 +2,7 @@
 
 XMLManager::XMLManager()
 {
+
 }
 int XMLManager::CreateXML(string xmlPath){
     this->xmlFilePath = xmlPath;
@@ -49,5 +50,12 @@ int XMLManager::LoadXML(string xmlPath){
         //不存在
         return XMLErrorCode::Open_NotExist;
     }
+
+}
+bool XMLManager::HasLoadedXML(){
+    if(this->xmlFilePath.size() >0){
+        return true;
+    }
+    return false;
 
 }

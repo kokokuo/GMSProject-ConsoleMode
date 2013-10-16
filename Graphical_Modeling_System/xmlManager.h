@@ -17,6 +17,8 @@ public:
     XMLManager();
     int CreateXML(string fileName);
     int LoadXML(string filenName);
+    void AddComponentToXmlFile(); //尚未實作
+    bool HasLoadedXML();
 
 private:
     fstream xmlFile;
