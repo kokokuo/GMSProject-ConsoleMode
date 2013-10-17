@@ -31,7 +31,10 @@ public:
     bool HasLoadedXMLRecord();
 
     //實作加入Components部分
-    void AddComponents(int componentType,string componentName);
+    void AddComponents(int id,int componentType,string componentName);
+
+    //取得所有Component
+    vector<Component*> GetComponents();
 private:
 
     map<int,TextStateMenu*> textMenuManager; //記錄所有選單的物件

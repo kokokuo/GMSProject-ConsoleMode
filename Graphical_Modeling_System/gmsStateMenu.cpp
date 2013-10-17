@@ -1,9 +1,10 @@
 #include "gmsStateMenu.h"
 #include "gms.h"
-
+#include <vector>
 
 GMSStateMenu::GMSStateMenu(GMS *gms) : TextStateMenu(gms)
 {
+    componentID = 1;
 }
 void GMSStateMenu::DisplayMenu(){
     cout << endl;
@@ -25,6 +26,9 @@ void GMSStateMenu::Update(){
             case 2:
                 AddComponents();
                 break;
+            case 3:
+                DisplayComponents();
+                break;
             case 4:
                 this->gms->SwitchToOtherMenu(TextMenuKey::HomeMenuKey);
                 break;
@@ -36,6 +40,7 @@ void GMSStateMenu::Update(){
 
 }
 
+//取得加入Component的輸入資料
 int GMSStateMenu::GetComponentInput(){
     int componentChoice;
     string input;
@@ -51,25 +56,50 @@ int GMSStateMenu::GetComponentInput(){
 }
 void GMSStateMenu::AddComponents(){
 
-
+    //判斷是否有載入XML
     if(this->gms->HasLoadedXMLRecord()){
         cout << "Select component type" << endl;
         cout << "[1]Cube [2]Pyramid [3]Sphere" << endl;
-        cout << "> " <<endl;
+        cout << "> " ;
 
+        //取得Componenet的Type與Name
         int choice = GetComponentInput();
-        string componetName;
-        getline(cin,componetName);
+        cout << "Enter component name:" << endl;
+        cout << "> " ;
+        string componentName;
+        getline(cin,componentName);
 
+        //透過GMS實作加入Component
+        this->gms->AddComponents(componentID,choice,componentName);
 
+        //顯示加入的資料
+        cout << "A components of " << GetComponentType(choice) << " added, name:" << componentName << ", ID: " << componentID <<endl;
+
+        componentID++; //ID累加
     }
     else{
         cout << "No XML record loaded" << endl;
     }
 
 }
+//用來轉換成文字
+string GMSStateMenu::GetComponentType(int type){
+    if(type == ComponentType::SphereType)
+        return "Sphere";
+    else if(type ==ComponentType::PyramidType)
+        return "Pyramid";
+    else
+        return "Cube";
+}
 
 void GMSStateMenu::DisplayComponents(){
-
-
+    vector<Component*> components = this->gms->GetComponents();
+    cout << "Components:" << endl;
+    cout << "------------------------------------------------------" <<endl;
+    cout << "   Type   |   ID    |    Name    " <<endl;
+    cout << "------------------------------------------------------" <<endl;
+    for(vector<Component*>::iterator it = components.begin();it != components.end();it++){
+        //使用C語言印出,為了能夠讓印出的格式排版整齊,[0]是擷取自串的字首
+        printf("    %c     |   %2d    |    %s\n",(*it)->GetType()[0],(*it)->GetID(),(*it)->GetName().c_str());
+    }
 }

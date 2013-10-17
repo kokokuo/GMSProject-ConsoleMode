@@ -5,7 +5,6 @@ GMS::GMS()
 {
     isWorking = true;
 
-
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::HomeMenuKey,new HomeStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GMSMenuKey,new GMSStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::XMLMenuKey,new XMLStateMenu(this)));
@@ -36,6 +35,12 @@ int GMS::LoadXMLFormatRecord(string path){
 bool GMS::HasLoadedXMLRecord(){
     return xmlManager.HasLoadedXML();
 }
-void GMS::AddComponents(int componentType, string componentName){
-    components.push_back(new Component(componentType,componentName));
+void GMS::AddComponents(int id, int componentType, string componentName){
+    components.push_back(new Component(id,componentType,componentName));
+
+    //自動寫入到XML檔案中
+    //...
+}
+vector<Component*> GMS::GetComponents(){
+    return this->components;
 }
