@@ -36,10 +36,12 @@ bool GMS::HasLoadedXMLRecord(){
     return xmlManager.HasLoadedXML();
 }
 void GMS::AddComponents(int id, int componentType, string componentName){
-    components.push_back(new Component(id,componentType,componentName));
+    Component *component = new Component(id,componentType,componentName);
+    components.push_back(component);
 
     //自動寫入到XML檔案中
     //...
+    xmlManager.AddComponentToXmlFile(component);
 }
 vector<Component*> GMS::GetComponents(){
     return this->components;

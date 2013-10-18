@@ -5,9 +5,9 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <QFile>
-#include <QTextStream>
 #include <fstream>
+#include "component.h"
+
 
 using namespace std;
 
@@ -17,7 +17,7 @@ public:
     XMLManager();
     int CreateXML(string fileName);
     int LoadXML(string filenName);
-    void AddComponentToXmlFile(); //尚未實作
+    int AddComponentToXmlFile(Component *newComponent); //尚未實作
     bool HasLoadedXML();
 
 private:
