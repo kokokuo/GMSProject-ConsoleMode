@@ -4,7 +4,6 @@
 
 GMSStateMenu::GMSStateMenu(GMS *gms) : TextStateMenu(gms)
 {
-    componentID = 1;
 }
 void GMSStateMenu::DisplayMenu(){
     cout << endl;
@@ -70,12 +69,12 @@ void GMSStateMenu::AddComponents(){
         getline(cin,componentName);
 
         //透過GMS實作加入Component
-        this->gms->AddComponents(componentID,choice,componentName);
+        this->gms->AddComponents(gms->GetCurrentComponentMakerID(),GetComponentType(choice),componentName);
 
         //顯示加入的資料
-        cout << "A components of " << GetComponentType(choice) << " added, name:" << componentName << ", ID: " << componentID <<endl;
+        cout << "A components of " << GetComponentType(choice) << " added, name:" << componentName << ", ID: " << gms->GetCurrentComponentMakerID() <<endl;
 
-        componentID++; //ID累加
+        this->gms->AddComponentID(); //ID累加
     }
     else{
         cout << "No XML record loaded" << endl;

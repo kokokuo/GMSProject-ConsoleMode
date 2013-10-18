@@ -18,7 +18,8 @@ public:
 class Component
 {
 public:
-    Component(int id,int componentType,string name);
+    Component(int id, string componentType, string name);
+    ~Component(){}
     int GetID(); //取得ID
     string GetType(); //取得Type
     string GetName(); //取得名稱

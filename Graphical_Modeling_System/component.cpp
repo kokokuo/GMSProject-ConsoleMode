@@ -8,18 +8,10 @@ int ComponentType::SphereType = 3;
 //=================================================
 
 //Component
-Component::Component(int id, int componentType, string name)
+Component::Component(int id, string componentType, string name)
 {
     this->id = id;
-    if(componentType == ComponentType::SphereType){
-        this->type = "Sphere";
-    }
-    else if(componentType == ComponentType::PyramidType){
-        this->type = "Pyramid";
-    }
-    else if(componentType == ComponentType::CubeType){
-        this->type = "Cube";
-    }
+    this->type = componentType;
     this->name = name;
 }
 int Component::GetID(){
