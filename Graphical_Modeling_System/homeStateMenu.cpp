@@ -28,6 +28,7 @@ void HomeStateMenu::Update(){
                 this->gms->SwitchToOtherMenu(TextMenuKey::GMSMenuKey);
                 break;
             case 2:
+                cout << "goodbye!" <<endl;
                 this->gms->SetCloseSystem();
                 break;
         }
