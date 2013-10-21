@@ -8,7 +8,7 @@ public:
     static int HomeMenuKey;
     static int GMSMenuKey;
     static int XMLMenuKey;
-    static int AddComponentMenuKey;
+    static int AddComponentMenuKey; //尚未實作此類別,因為目前的作業需求Components相關的作仍很少,不需獨立出來一個選單
 };
 
 #endif // TEXTMENUKEY_H

@@ -23,6 +23,7 @@ void GMS::SetCloseSystem(){
     this->isWorking = false;
 }
 void GMS::SwitchToOtherMenu(int Key){
+    //把現在的選單指標指向 要切換的選單(透過map的key值取得value->選單類別 )
     this->currentTextMenu = textMenuManager[Key];
 }
 
@@ -37,25 +38,32 @@ int GMS::LoadXMLFormatRecord(string path){
     ClearComponents(); //清除原先的Components
 
     int code = xmlManager.LoadXML(path,&components);
+
+
     //設定Component現在的最大ID,從載入的XML資料中去看
-    //加一為現在的ID
-    componentID = components[components.size()-1]->GetID() +1;
+    //如果有資料,取得檔案中最大的ID,並加一為現在的ID
+    if(components.size() >0){
+        componentID = components[components.size()-1]->GetID() +1;
+    }
 
     return code;
 }
+//是否有載入過Record,有的話就可以加入Component
 bool GMS::HasLoadedXMLRecord(){
     return xmlManager.HasLoadedXML();
 }
 void GMS::AddComponents(int id, string componentType, string componentName){
+    //創建新的Component並加入智vector中
     Component *component = new Component(id,componentType,componentName);
     components.push_back(component);
 
-    //自動寫入到XML檔案中
+    //把Component寫入到XML檔案中
     xmlManager.AddComponentToXMLFile(component);
 }
 vector<Component*> GMS::GetComponents(){
     return this->components;
 }
+//取得目前生產的ComponentsID
 int GMS::GetCurrentComponentMakerID(){
     return this->componentID;
 }

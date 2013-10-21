@@ -34,6 +34,7 @@ int XMLManager::CreateXML(string xmlPath){
 
 
 }
+//vector<Component*>* components是為了能夠直接取得整個vector的記憶體位置,這樣外部呼叫時傳入vector,處理完後才能夠拿到載入好的資料(因為回傳值拿來作為回傳錯誤碼用)
 int XMLManager::LoadXML(string xmlPath,vector<Component*>* components){
 
     //開檔,但是不會自動create(以讀檔的方式才能確保不會自動創建)
@@ -62,7 +63,7 @@ bool XMLManager::HasLoadedXML(){
 
 }
 void XMLManager::AddComponentToXMLFile(Component *newComponent){
-    xmlFile.open(xmlFilePath.c_str(),ios::out | ios::in);
+    xmlFile.open(xmlFilePath.c_str(),ios::out | ios::in); //再次開檔
 
     try{
         xmlFile.seekg(-6,std::ios::end); //增加新資料是從結尾的</GMS>前加入,所以這邊的作法是覆蓋掉</GMS>,從檔案尾端往前移動-6個位置
@@ -90,7 +91,7 @@ string XMLManager::GetTagValue(string startTag,string endTag,string line){
 }
 
 vector<Component*> XMLManager::ParserXMLFile(){
-    vector<Component*> components;
+    vector<Component*> components; //宣告用來存放檔案中所有Parser出的Components
     //判斷有無找到Node
     bool IsFindComponentNode = false;
     //判斷有無讀取到ID,Type,Name
@@ -100,7 +101,7 @@ vector<Component*> XMLManager::ParserXMLFile(){
     string type,name;
     string line;
     while(getline(xmlFile,line)){
-        cout << line <<endl;
+        //cout << line <<endl; //測試用
         //如果有找到Node,用Bool值紀錄
         if(line.find("<Node>") != string::npos ){
             IsFindComponentNode = true;
@@ -108,6 +109,8 @@ vector<Component*> XMLManager::ParserXMLFile(){
         //找到開始<Node>
         if(IsFindComponentNode){
             //尋找Node中的Component標籤,並擷取資料
+
+            //如果有找到<ID>標籤與</ID>標籤,則擷取標籤中資料
             if( (line.find("<ID>") != string::npos) && ( line.find("</ID>")  != string::npos ) ){
                 id = atoi( GetTagValue("<ID>","</ID>",line).c_str() );
                 IsGetID = true;
@@ -127,5 +130,5 @@ vector<Component*> XMLManager::ParserXMLFile(){
             IsFindComponentNode = IsGetID = IsGetType = IsGetName = false; //從新設定回false
         }
     }
-    return components;
+    return components; //回傳檔案中所有的Components
 }

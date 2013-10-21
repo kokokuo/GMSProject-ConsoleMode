@@ -13,10 +13,10 @@ public:
     virtual void GetInput(); //輸入的函式,預設使用這個父類別,如果要修改的話在子類別ovveride
     virtual void Update() =0; //更新邏輯判斷
     virtual void DisplayMenu() = 0; //顯示畫面
-    bool CheckInput(const int maxInputOption);
+    bool CheckInput(const int maxInputOption); //確認輸入的數值選項是否正確
 protected:
     GMS *gms; //透過知道GMS系統,與GMS互動,並透過GMS切換至別的SateMenu
-    int command;
+    int command;//輸入的指令
 };
 
 #endif // TEXTMENU_H

@@ -13,11 +13,11 @@ class HomeStateMenu : public TextStateMenu
 {
 public:
     HomeStateMenu(GMS *gms);
-    void DisplayMenu();
-    void Update();
+    void DisplayMenu(); //顯示畫面(override TextStateMenu的方法)
+    void Update(); //更新邏輯(override TextStateMenu的方法)
 
 private:
-    bool IsFirstCome;
+    bool IsFirstCome; //是否第一次進來選單
     static const int COMMAND_NUMBER = 2;
 
 };

@@ -18,9 +18,9 @@ class GMS
 {
 public:
     GMS();
-    void RunGMS();
-    void SetCloseSystem();
-    void SwitchToOtherMenu(int Key); //切換至別的選單State
+    void RunGMS(); //執行GMS系統
+    void SetCloseSystem(); //設定關閉視窗
+    void SwitchToOtherMenu(int Key); //切換至別的選單State,key為選單的編號,請參考TextMenuKey靜態類別
 
     //創造XML檔案,路徑
     int CreateXMLFormatRecord(string path);

@@ -17,10 +17,11 @@ void GMSStateMenu::DisplayMenu(){
 void GMSStateMenu::Update(){
     //輸入正確
     if(this->CheckInput((this->COMMAND_NUMBER))){
+        //作每個指定了事情
         switch(command)
         {
             case 1:
-                this->gms->SwitchToOtherMenu(TextMenuKey::XMLMenuKey);
+                this->gms->SwitchToOtherMenu(TextMenuKey::XMLMenuKey); //透過key 切換到其他選單->這邊是XML的選單
                 break;
             case 2:
                 AddComponents();
@@ -29,7 +30,7 @@ void GMSStateMenu::Update(){
                 DisplayComponents();
                 break;
             case 4:
-                this->gms->SwitchToOtherMenu(TextMenuKey::HomeMenuKey);
+                this->gms->SwitchToOtherMenu(TextMenuKey::HomeMenuKey);  //透過key 切換到其他選單->回到HomeMenu的選單
                 break;
         }
     }
@@ -74,7 +75,7 @@ void GMSStateMenu::AddComponents(){
         //顯示加入的資料
         cout << "A components of " << GetComponentType(choice) << " added, name:" << componentName << ", ID: " << gms->GetCurrentComponentMakerID() <<endl;
 
-        this->gms->AddComponentID(); //ID累加
+        this->gms->AddComponentID(); //ID累加(ID的部分都是透過GMS來完成,確保由GMS系統在管理Component ID)
     }
     else{
         cout << "No XML record loaded" << endl;
@@ -90,7 +91,7 @@ string GMSStateMenu::GetComponentType(int type){
     else
         return "Cube";
 }
-
+//顯示Components的資料
 void GMSStateMenu::DisplayComponents(){
     vector<Component*> components = this->gms->GetComponents();
     cout << "Components:" << endl;
