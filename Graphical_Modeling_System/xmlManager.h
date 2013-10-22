@@ -16,7 +16,7 @@ class XMLManager
 {
 public:
     XMLManager();
-    int CreateXML(string fileName);
+    int CreateXML(string fileName); //創建檔案
     //載入XML檔案,第二個參數是透過指標的方式拿到Parser好的Components資料,所以是vector<T>*
     int LoadXML(string filenName, vector<Component *>* components);
 

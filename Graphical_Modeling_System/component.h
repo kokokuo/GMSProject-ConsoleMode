@@ -18,6 +18,7 @@ public:
 class Component
 {
 public:
+    //加入編號，類型，與元件名稱
     Component(int id, string componentType, string name);
     ~Component(){}
     int GetID(); //取得ID
