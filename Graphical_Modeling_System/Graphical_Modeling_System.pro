@@ -20,19 +20,19 @@ SOURCES += main.cpp \
     textStateMenu.cpp \
     homeStateMenu.cpp \
     gmsStateMenu.cpp \
-    xmlStateMenu.cpp \
     xmlErrorCode.cpp \
     textMenuKey.cpp \
     xmlManager.cpp \
-    component.cpp
+    component.cpp \
+    groupStateMenu.cpp
 
 HEADERS += \
     gms.h \
     textStateMenu.h \
     homeStateMenu.h \
     gmsStateMenu.h \
-    xmlStateMenu.h \
     xmlErrorCode.h \
     textMenuKey.h \
     xmlManager.h \
-    component.h
+    component.h \
+    groupStateMenu.h

@@ -4,35 +4,19 @@ XMLManager::XMLManager()
 {
 
 }
-int XMLManager::CreateXML(string xmlPath){
-
-
-    //開檔,但是不會自動create(以讀檔的方式才能確保不會自動創建)
-    xmlFile.open(xmlPath.c_str(),ios::in);
-
-    //透過檢查是否開啟來判斷有無存在檔案
+int XMLManager::SaveXML(string xmlPath, vector<Component *> components){
+    //創建檔案
+    xmlFile.open(xmlPath.c_str(),ios::out);
     if(xmlFile.is_open()){
+        AddComponentToXMLFile(components);
+        this->xmlFilePath = xmlPath; //把路徑記錄下來
+         xmlFile.close();
+        return XMLErrorCode::OK;
+    }
+    else{ //創建後如果無開啟 代表可能有錯誤
         xmlFile.close();
-        return XMLErrorCode::Create_HasExisted;
+        return XMLErrorCode::Save_PathError;
     }
-    else{ //正式創建檔案
-        xmlFile.open(xmlPath.c_str(),ios::out);
-
-        if(xmlFile.is_open()){
-            xmlFile << "<GMS>\n" << "</GMS>";
-            xmlFile.close();
-            this->xmlFilePath = xmlPath; //把路徑記錄下來
-            return XMLErrorCode::OK;
-        }
-        else{ //創建後如果無開啟 代表可能有錯誤
-            xmlFile.close();
-            return XMLErrorCode::Create_PathError;
-        }
-    }
-
-
-
-
 }
 //vector<Component*>* components是為了能夠直接取得整個vector的記憶體位置,這樣外部呼叫時傳入vector,處理完後才能夠拿到載入好的資料(因為回傳值拿來作為回傳錯誤碼用)
 int XMLManager::LoadXML(string xmlPath,vector<Component*>* components){
@@ -55,30 +39,29 @@ int XMLManager::LoadXML(string xmlPath,vector<Component*>* components){
     }
 
 }
-bool XMLManager::HasLoadedXML(){
-    if(this->xmlFilePath.size() >0){
-        return true;
-    }
-    return false;
 
-}
-void XMLManager::AddComponentToXMLFile(Component *newComponent){
-    xmlFile.open(xmlFilePath.c_str(),ios::out | ios::in); //再次開檔
-
+void XMLManager::AddComponentToXMLFile(vector<Component*> components){
     try{
-        xmlFile.seekg(-6,std::ios::end); //增加新資料是從結尾的</GMS>前加入,所以這邊的作法是覆蓋掉</GMS>,從檔案尾端往前移動-6個位置
-        xmlFile << "\t<Node>\n";
-        xmlFile << "\t\t<ID>" << newComponent->GetID() << "</ID>\n";
-        xmlFile << "\t\t<Name>" << newComponent->GetName() << "</Name>\n";
-        xmlFile << "\t\t<Type>" << newComponent->GetType() << "</Type>\n";
-        xmlFile << "\t</Node>\n";
+        xmlFile << "<GMS>\n";
+        xmlFile << "\t<Components>\n";
+        //迴圈的方式一個一個抓取Component並寫入到檔案中
+        for(vector<Component*>::iterator it = components.begin();it != components.end();it++){
+            xmlFile << "\t\t<Node>\n";
+            xmlFile << "\t\t\t<ID>" << (*it)->GetID() << "</ID>\n";
+            xmlFile << "\t\t\t<Name>" << (*it)->GetName() << "</Name>\n";
+            xmlFile << "\t\t\t<Type>" << (*it)->GetType() << "</Type>\n";
+            xmlFile << "\t\t</Node>\n";
+        }
+        xmlFile << "\t</Components>\n";
+
+        //Group 尚未...
+
         xmlFile <<  "</GMS>"; //補上</GMS>標籤
 
     }
     catch(exception ex){
         cout << ex.what() <<endl;
     }
-    xmlFile.close();
 
 }
 string XMLManager::GetTagValue(string startTag,string endTag,string line){

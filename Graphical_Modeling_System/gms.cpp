@@ -7,7 +7,7 @@ GMS::GMS()
     this->componentID = 1;
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::HomeMenuKey,new HomeStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GMSMenuKey,new GMSStateMenu(this)));
-    this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::XMLMenuKey,new XMLStateMenu(this)));
+    this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GroupMenuKey,new GroupStateMenu(this)));
     this->currentTextMenu = textMenuManager[TextMenuKey::HomeMenuKey];
 }
 //主流程 操控選單的畫面顯示與邏輯輸入
@@ -27,16 +27,15 @@ void GMS::SwitchToOtherMenu(int Key){
     this->currentTextMenu = textMenuManager[Key];
 }
 
-int GMS::CreateXMLFormatRecord(string path){
-    //新建一個XML等於載入一個新的XML檔,並起薪的XML檔應該是無資料的
-    //所以要把原先的都清光
-    ClearComponents();
-
-    return xmlManager.CreateXML(path);
+//把components存入檔案
+//尚未加入Group....
+int GMS::SaveXMLFormatRecord(string path){
+    return xmlManager.SaveXML(path,components);
 }
 int GMS::LoadXMLFormatRecord(string path){
     ClearComponents(); //清除原先的Components
 
+    //尚未加入Group...
     int code = xmlManager.LoadXML(path,&components);
 
 
@@ -48,17 +47,12 @@ int GMS::LoadXMLFormatRecord(string path){
 
     return code;
 }
-//是否有載入過Record,有的話就可以加入Component
-bool GMS::HasLoadedXMLRecord(){
-    return xmlManager.HasLoadedXML();
-}
+
 void GMS::AddComponents(int id, string componentType, string componentName){
     //創建新的Component並加入智vector中
     Component *component = new Component(id,componentType,componentName);
     components.push_back(component);
 
-    //把Component寫入到XML檔案中
-    xmlManager.AddComponentToXMLFile(component);
 }
 vector<Component*> GMS::GetComponents(){
     return this->components;

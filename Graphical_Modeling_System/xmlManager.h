@@ -16,17 +16,13 @@ class XMLManager
 {
 public:
     XMLManager();
-    int CreateXML(string fileName); //創建檔案
+    int SaveXML(string fileName,vector<Component *> components); //存檔XML,如果不存在則創建檔案
     //載入XML檔案,第二個參數是透過指標的方式拿到Parser好的Components資料,所以是vector<T>*
     int LoadXML(string filenName, vector<Component *>* components);
 
-    //加入Component到XML
-    void AddComponentToXMLFile(Component *newComponent);
-
-    //判斷是否載入XML
-    bool HasLoadedXML();
-
 private:
+    //加入Component到XML
+    void AddComponentToXMLFile(vector<Component *> components);
     //作XML的Parser
     vector<Component*> ParserXMLFile();
 

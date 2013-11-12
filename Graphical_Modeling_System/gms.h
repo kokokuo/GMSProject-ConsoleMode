@@ -8,7 +8,7 @@
 #include "textStateMenu.h"
 #include "homeStateMenu.h"
 #include "gmsStateMenu.h"
-#include "xmlStateMenu.h"
+#include "groupStateMenu.h"
 #include "xmlManager.h"
 
 using namespace std;
@@ -22,13 +22,10 @@ public:
     void SetCloseSystem(); //設定關閉視窗
     void SwitchToOtherMenu(int Key); //切換至別的選單State,key為選單的編號,請參考TextMenuKey靜態類別
 
-    //創造XML檔案,路徑
-    int CreateXMLFormatRecord(string path);
+    //存檔XML檔案,路徑
+    int SaveXMLFormatRecord(string path);
     //載入XML檔案,路徑
     int LoadXMLFormatRecord(string path);
-
-    //是否有載入Record
-    bool HasLoadedXMLRecord();
 
     //實作加入Components部分,id,類型,名稱
     void AddComponents(int id, string componentType, string componentName);
