@@ -33,7 +33,7 @@ int GMS::SaveXMLFormatRecord(string path){
     return xmlManager.SaveXML(path,components);
 }
 int GMS::LoadXMLFormatRecord(string path){
-    ClearComponents(); //清除原先的Components
+    components.ClearComponents(); //清除原先的Components
 
     //尚未加入Group...
     int code = xmlManager.LoadXML(path,&components);
@@ -41,21 +41,31 @@ int GMS::LoadXMLFormatRecord(string path){
 
     //設定Component現在的最大ID,從載入的XML資料中去看
     //如果有資料,取得檔案中最大的ID,並加一為現在的ID
-    if(components.size() >0){
-        componentID = components[components.size()-1]->GetID() +1;
+    if(components.GetComponts().size() >0){
+        componentID = components.GetComponts()[components.GetComponts().size()-1]->GetID() +1;
     }
 
     return code;
 }
 
 void GMS::AddComponents(int id, string componentType, string componentName){
-    //創建新的Component並加入智vector中
-    Component *component = new Component(id,componentType,componentName);
-    components.push_back(component);
+    components.AddComponentToList(id,componentType,componentName);
 
 }
+//刪除Component與判斷有無存在
+bool GMS::DeleteComponent(int id){
+    for(vector<Component*>::iterator it =  this->components.GetComponts().begin();it != this->components.GetComponts().end();it++){
+        if((*it)->GetID() == id){
+            this->components.DeleteComponentFromList(id);
+            return true; //告知有刪除掉
+        }
+    }
+
+    return false; //沒有刪除掉 因為不存在
+}
+
 vector<Component*> GMS::GetComponents(){
-    return this->components;
+    return this->components.GetComponts();
 }
 //取得目前生產的ComponentsID
 int GMS::GetCurrentComponentMakerID(){
@@ -64,12 +74,4 @@ int GMS::GetCurrentComponentMakerID(){
 void GMS::AddComponentID(){
     componentID++;
 }
-void GMS::ClearComponents(){
-    //重新載入新的XML,要把原先的資料先全部移除,避免有Memory Leak,再從新添加從XML載入的資料
-    if(components.size() > 0){
-        for(vector<Component*>::iterator it = components.begin();it != components.end();it++){
-            delete (*it);
-        }
-        components.clear();
-    }
-}
+

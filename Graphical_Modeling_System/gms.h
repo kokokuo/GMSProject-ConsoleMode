@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include "component.h"
+#include "components.h"
 #include "textMenuKey.h"
 #include "textStateMenu.h"
 #include "homeStateMenu.h"
@@ -30,6 +31,9 @@ public:
     //實作加入Components部分,id,類型,名稱
     void AddComponents(int id, string componentType, string componentName);
 
+    //刪除Component
+    bool DeleteComponent(int id);
+
     //取得所有Component
     vector<Component*> GetComponents();
 
@@ -39,13 +43,11 @@ public:
     //累加ID
     void AddComponentID();
 private:
-    //清除掉在記憶體中的Components
-    void ClearComponents();
 
     int componentID; //Component的編號
     map<int,TextStateMenu*> textMenuManager; //記錄所有選單的物件
     TextStateMenu *currentTextMenu; //切換至要執行的選單指標
-    vector<Component*> components; //記錄所有的Components
+    Components components; //記錄所有的Components
     bool isWorking; //判斷GMS系痛是否在執行中的變數
     XMLManager xmlManager; //實際負責XML所有部分的操作,被GMS系統擁有,調用
 

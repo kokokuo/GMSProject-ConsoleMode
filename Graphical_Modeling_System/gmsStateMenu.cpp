@@ -34,7 +34,7 @@ void GMSStateMenu::Update(){
                 break;
             case 4:
                 //delete
-
+                DeleteComponent();
                 break;
             case 5:
                 //group
@@ -81,8 +81,6 @@ int GMSStateMenu::GetComponentInput(){
     return componentChoice;
 }
 void GMSStateMenu::AddComponents(){
-
-
     cout << "Select component type" << endl;
     cout << "[1]Cube [2]Pyramid [3]Sphere" << endl;
     cout << "> " ;
@@ -102,6 +100,27 @@ void GMSStateMenu::AddComponents(){
 
     this->gms->AddComponentID(); //ID累加(ID的部分都是透過GMS來完成,確保由GMS系統在管理Component ID)
 
+
+}
+//刪除Component
+void GMSStateMenu::DeleteComponent(){
+    string input;
+    int deleteId;
+
+    cout << "Select component to deleted" <<endl;
+    cout << "> " ;
+
+    cin >> input;
+    cin.ignore(INT_MAX,'\n');
+    deleteId = atoi(input.c_str());
+
+    bool isExist = gms->DeleteComponent(deleteId);
+    if(isExist){
+        cout << "The component '" << deleteId << "' has been deleted" << endl;
+    }
+    else{
+        cout << "The component of ID'" << deleteId << "' is not exist" << endl;
+    }
 
 }
 //用來轉換成文字

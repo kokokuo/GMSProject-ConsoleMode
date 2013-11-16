@@ -22,6 +22,7 @@ public:
 private:
     void DisplayComponents(); //顯示Components
     void AddComponents(); //加入Components (Components部分因為暫時還不知道後續會加入的功能,所以沒有另外編入一個Menu類別處理)
+    void DeleteComponent(); //刪除Compontent;
     int GetComponentInput(); //選擇component編號的輸入
     string GetComponentType(int type); //取得類型的字串名稱
 

@@ -24,7 +24,9 @@ SOURCES += main.cpp \
     textMenuKey.cpp \
     xmlManager.cpp \
     component.cpp \
-    groupStateMenu.cpp
+    groupStateMenu.cpp \
+    components.cpp \
+    group.cpp
 
 HEADERS += \
     gms.h \
@@ -35,4 +37,6 @@ HEADERS += \
     textMenuKey.h \
     xmlManager.h \
     component.h \
-    groupStateMenu.h
+    groupStateMenu.h \
+    components.h \
+    group.h

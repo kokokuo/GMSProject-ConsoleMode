@@ -8,7 +8,7 @@
 #include <fstream>
 #include <vector>
 #include "component.h"
-
+#include "components.h"
 
 using namespace std;
 
@@ -16,9 +16,9 @@ class XMLManager
 {
 public:
     XMLManager();
-    int SaveXML(string fileName,vector<Component *> components); //存檔XML,如果不存在則創建檔案
-    //載入XML檔案,第二個參數是透過指標的方式拿到Parser好的Components資料,所以是vector<T>*
-    int LoadXML(string filenName, vector<Component *>* components);
+    int SaveXML(string fileName, Components components); //存檔XML,如果不存在則創建檔案
+    //載入XML檔案,第二個參數是透過指標的方式拿到Parser好的Components資料,所以是Components*
+    int LoadXML(string filenName, Components* components);
 
 private:
     //加入Component到XML

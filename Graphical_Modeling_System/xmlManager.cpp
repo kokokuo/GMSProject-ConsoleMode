@@ -4,11 +4,11 @@ XMLManager::XMLManager()
 {
 
 }
-int XMLManager::SaveXML(string xmlPath, vector<Component *> components){
+int XMLManager::SaveXML(string xmlPath, Components components){
     //創建檔案
     xmlFile.open(xmlPath.c_str(),ios::out);
     if(xmlFile.is_open()){
-        AddComponentToXMLFile(components);
+        AddComponentToXMLFile(components.GetComponts());
         this->xmlFilePath = xmlPath; //把路徑記錄下來
          xmlFile.close();
         return XMLErrorCode::OK;
@@ -18,8 +18,8 @@ int XMLManager::SaveXML(string xmlPath, vector<Component *> components){
         return XMLErrorCode::Save_PathError;
     }
 }
-//vector<Component*>* components是為了能夠直接取得整個vector的記憶體位置,這樣外部呼叫時傳入vector,處理完後才能夠拿到載入好的資料(因為回傳值拿來作為回傳錯誤碼用)
-int XMLManager::LoadXML(string xmlPath,vector<Component*>* components){
+//Components* components是為了能夠直接取得整個vector的記憶體位置,這樣外部呼叫時傳入vector,處理完後才能夠拿到載入好的資料(因為回傳值拿來作為回傳錯誤碼用)
+int XMLManager::LoadXML(string xmlPath,Components* components){
 
     //開檔,但是不會自動create(以讀檔的方式才能確保不會自動創建)
     xmlFile.open(xmlPath.c_str(),ios::in);
@@ -27,7 +27,7 @@ int XMLManager::LoadXML(string xmlPath,vector<Component*>* components){
     //透過檢查是否開啟來判斷有無存在檔案
     if(xmlFile.is_open()){
         this->xmlFilePath = xmlPath; //把路徑記錄下來
-        *components = ParserXMLFile(); //取出XML中的資料到記憶體vector
+        components->SetComponentsFromLoadData(ParserXMLFile()); //取出XML中的資料到記憶體vector
         xmlFile.close();
 
         return XMLErrorCode::OK;

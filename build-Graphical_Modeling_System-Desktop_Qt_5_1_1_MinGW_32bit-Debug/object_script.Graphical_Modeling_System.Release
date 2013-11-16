@@ -1,0 +1,13 @@
+INPUT(
+./release\main.o
+./release\gms.o
+./release\textStateMenu.o
+./release\homeStateMenu.o
+./release\gmsStateMenu.o
+./release\xmlErrorCode.o
+./release\textMenuKey.o
+./release\xmlManager.o
+./release\component.o
+./release\groupStateMenu.o
+./release\components.o
+);
