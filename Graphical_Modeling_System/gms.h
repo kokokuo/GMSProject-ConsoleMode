@@ -11,6 +11,8 @@
 #include "gmsStateMenu.h"
 #include "groupStateMenu.h"
 #include "xmlManager.h"
+#include "group.h"
+#include "groups.h"
 
 using namespace std;
 
@@ -37,20 +39,41 @@ public:
     //取得所有Component
     vector<Component*> GetComponents();
 
+    //取得Groups
+    map<string,Group*> GetGroups();
+
     //取得產生Component到目前的最大ID
     int GetCurrentComponentMakerID();
 
-    //累加ID
-    void AddComponentID();
-private:
+    //取得產生Group到目前的最大ID
+    int GetCurrentGroupMakerID();
 
+    //累加ComponentID
+    void AddComponentID();
+
+    //累加GroupID
+    void AddGroupID();
+
+    //判斷GroupId有無存在
+    bool CheckGroupHasBeenExisted(int groupId);
+    //判斷這個Component的ID是否存在Components
+    bool CheckComponentIDHasBeenExisted(int id);
+
+    //判斷這個MemberId是否存在指定的groupId
+    bool CheckMemberIDHasBeenTheGroup(int groupId,int memberId);
+
+    //加入新的Group
+    void AddNewGroup(int groupId,string name,vector<int> members);
+private:
     int componentID; //Component的編號
+    int groupID; //group的編號
     map<int,TextStateMenu*> textMenuManager; //記錄所有選單的物件
     TextStateMenu *currentTextMenu; //切換至要執行的選單指標
     Components components; //記錄所有的Components
     bool isWorking; //判斷GMS系痛是否在執行中的變數
     XMLManager xmlManager; //實際負責XML所有部分的操作,被GMS系統擁有,調用
 
+    Groups groups; //紀錄Groups
 };
 
 #endif // GMS_H

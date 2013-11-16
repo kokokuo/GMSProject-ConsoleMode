@@ -5,6 +5,7 @@ GMS::GMS()
 {
     isWorking = true;
     this->componentID = 1;
+    this->groupID = 1;
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::HomeMenuKey,new HomeStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GMSMenuKey,new GMSStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GroupMenuKey,new GroupStateMenu(this)));
@@ -54,13 +55,10 @@ void GMS::AddComponents(int id, string componentType, string componentName){
 }
 //刪除Component與判斷有無存在
 bool GMS::DeleteComponent(int id){
-    for(vector<Component*>::iterator it =  this->components.GetComponts().begin();it != this->components.GetComponts().end();it++){
-        if((*it)->GetID() == id){
-            this->components.DeleteComponentFromList(id);
-            return true; //告知有刪除掉
-        }
+    if(this->components.CheckIDHasBeenExisted(id)){
+        this->components.DeleteComponentFromList(id);
+        return true; //告知有刪除掉
     }
-
     return false; //沒有刪除掉 因為不存在
 }
 
@@ -71,7 +69,39 @@ vector<Component*> GMS::GetComponents(){
 int GMS::GetCurrentComponentMakerID(){
     return this->componentID;
 }
+//取得目前生產的GroupID
+int GMS::GetCurrentGroupMakerID(){
+    return this->groupID;
+}
 void GMS::AddComponentID(){
     componentID++;
 }
 
+void GMS::AddGroupID(){
+    groupID++;
+}
+//判斷group有無存在
+bool GMS::CheckGroupHasBeenExisted(int groupId){
+    return this->groups.CheckGroupHasBeenExisted(groupId);
+}
+
+//判斷這個ComponentID有無存在Components
+bool GMS::CheckComponentIDHasBeenExisted(int id){
+    return this->components.CheckIDHasBeenExisted(id);
+}
+//取得所有Group
+map<string,Group*> GMS::GetGroups(){
+    return groups.GetGroups();
+}
+
+//判斷這個MemberId是否存在指定的groupId(使用前請先透過 CheckGroupHasBeenExisted判斷Group有無存在)
+bool GMS::CheckMemberIDHasBeenTheGroup(int groupId, int memberId){
+    Group* g =  groups.GetGroup(groupId);
+    return  g->CheckMemberHasBeenExisted(memberId);
+
+}
+//加入新的Group
+void GMS::AddNewGroup(int groupId, string name, vector<int> members){
+    Group* newGroup = new Group(groupId,name,members);
+    groups.AddGroup(newGroup);
+}

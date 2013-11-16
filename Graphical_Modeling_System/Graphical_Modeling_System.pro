@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     component.cpp \
     groupStateMenu.cpp \
     components.cpp \
-    group.cpp
+    group.cpp \
+    groups.cpp
 
 HEADERS += \
     gms.h \
@@ -39,4 +40,5 @@ HEADERS += \
     component.h \
     groupStateMenu.h \
     components.h \
-    group.h
+    group.h \
+    groups.h

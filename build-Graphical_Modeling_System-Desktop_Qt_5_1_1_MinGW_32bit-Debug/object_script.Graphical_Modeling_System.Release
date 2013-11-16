@@ -10,4 +10,6 @@ INPUT(
 ./release\component.o
 ./release\groupStateMenu.o
 ./release\components.o
+./release\group.o
+./release\groups.o
 );

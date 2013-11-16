@@ -16,8 +16,12 @@ public:
     void DeleteComponentFromList(int id);
     //取得Component
     vector<Component*> GetComponts();
+    //從Load檔案中取得Components
     void SetComponentsFromLoadData(vector<Component*> components);
+    //清除Components
     void ClearComponents();
+    //判斷ID是否存在
+    bool CheckIDHasBeenExisted(int id);
 private:
     vector<Component*> components;
 };

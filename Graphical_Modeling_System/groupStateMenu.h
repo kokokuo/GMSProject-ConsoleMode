@@ -6,7 +6,9 @@
 #include "xmlErrorCode.h"
 #include <iostream>
 #include <stdlib.h>
-
+#include <sstream>
+#include <string.h>
+#include <vector>
 using namespace std;
 
 class GMS;
@@ -18,12 +20,13 @@ public:
     void Update();
     void DisplayMenu();
 
-    void LoadXMLPath(); //輸入載入XML檔案的路徑
-    void CreateXMLPath(); //輸入創造XML檔案的路徑
-
-
 private:
-
+    //加入新的Group
+    void AddNewGroup();
+    //加入Members到Group
+    void AddMembersToGroup();
+    //輸入MembersID與判斷有無輸入錯誤
+    vector<int> InputMembersIDAndCheck(string outputMessage);
     static const int COMMAND_NUMBER = 3;
 };
 
