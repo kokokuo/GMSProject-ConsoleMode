@@ -24,8 +24,12 @@ public:
     //從檔案中從檔案中加入Group
     void SetGroupsFromLoadData(Group* group);
     void ClearAllGroup();
+
+    //取得用Vector容器裝置方式的Groups
+    vector<Group*> GetGroupByVectorContainer();
 private:
     map<string,Group*> groups;
+    vector<Group*> groupsVec;
 };
 
 #endif // GROUPS_H

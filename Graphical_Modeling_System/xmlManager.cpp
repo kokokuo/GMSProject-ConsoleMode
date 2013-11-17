@@ -27,7 +27,7 @@ int XMLManager::LoadXML(string fileName, Components* components,Groups* groups){
     //透過檢查是否開啟來判斷有無存在檔案
     if(xmlFile.is_open()){
         this->xmlFilePath = fileName; //把路徑記錄下來
-        components->SetComponentsFromLoadData(ParserXMLFile()); //取出XML中的資料到記憶體vector
+        ParserXMLFile(components,groups); //取出XML中的資料到記憶體vector
         xmlFile.close();
 
         return XMLErrorCode::OK;
@@ -54,7 +54,16 @@ void XMLManager::AddComponentAndGroupToXMLFile(vector<Component*> components,map
         }
         xmlFile << "\t</Components>\n";
 
-        //Group 尚未...
+        //Group
+        xmlFile << "\t<Group>\n";
+        for(map<string,Group*>::iterator it =groups.begin();it != groups.end();it++){
+            xmlFile << "\t\t<Node>\n";
+            xmlFile << "\t\t\t<ID>" << it->second->GetID() << "</ID>\n";
+            xmlFile << "\t\t\t<Name>" << it->second->GetName() << "</Name>\n";
+            xmlFile << "\t\t\t<Member>" << it->second->GetMembersIdByStringFormat() << "</Member>\n";
+            xmlFile << "\t\t</Node>\n";
+        }
+        xmlFile << "\t</Group>\n";
 
         xmlFile <<  "</GMS>"; //補上</GMS>標籤
 
@@ -72,46 +81,118 @@ string XMLManager::GetTagValue(string startTag,string endTag,string line){
     string sub = line.substr( ( foundStartTagPos + startTag.size() ), ( foundEndTagPos - (foundStartTagPos + startTag.size()) ) );
     return sub;
 }
+//components指標型態用來存放檔案中所有Parser出的Component
+//groups指標型態用來存放檔案中所有Parser出的group
+void XMLManager::ParserXMLFile( Components* components,Groups* groups){
 
-vector<Component*> XMLManager::ParserXMLFile(){
-    vector<Component*> components; //宣告用來存放檔案中所有Parser出的Components
-    //判斷有無找到Node
-    bool IsFindComponentNode = false;
-    //判斷有無讀取到ID,Type,Name
-    bool IsGetID, IsGetType , IsGetName;
-    IsGetID = IsGetType = IsGetName = false;
+    //判斷有無找到Component Node
+    bool IsFindComponentNode = false,IsFindComponents = false;
+    //判斷有無讀取到Component ID,Type,Name
+    bool IsGetComponentID, IsGetComponentType , IsGetComponentName;
+    //判斷有無找到Group Node
+    bool IsFindGroupNode = false,IsFindGroups = false;
+    //判斷有無讀取到Group ID,Name,Member
+    bool IsGetGroupID,IsGetGroupName,IsGetGroupMembers;
+
+    IsGetComponentID = IsGetComponentType = IsGetComponentName = false;
+    IsGetGroupID = IsGetGroupName = IsGetGroupMembers = false;
+
     int id;
     string type,name;
+    string members;
     string line;
     while(getline(xmlFile,line)){
         //cout << line <<endl; //測試用
-        //如果有找到Node,用Bool值紀錄
-        if(line.find("<Node>") != string::npos ){
+
+        //尋找是在Components或Group Node
+        if(line.find("<Components>") != string::npos){
+           IsFindComponents = true;
+        }
+        else if(line.find("<Group>") != string::npos){
+           IsFindGroups = true;
+        }
+
+         //如果有找到Node,用Bool值紀錄
+        if(line.find("<Node>") != string::npos  && IsFindComponents){
             IsFindComponentNode = true;
         }
-        //找到開始<Node>
+        else if(line.find("<Node>") != string::npos  && IsFindGroups){
+            IsFindGroupNode = true;
+        }
+        //找到開始尋找是在Components <Node>
         if(IsFindComponentNode){
-            //尋找Node中的Component標籤,並擷取資料
 
             //如果有找到<ID>標籤與</ID>標籤,則擷取標籤中資料
             if( (line.find("<ID>") != string::npos) && ( line.find("</ID>")  != string::npos ) ){
                 id = atoi( GetTagValue("<ID>","</ID>",line).c_str() );
-                IsGetID = true;
+                IsGetComponentID = true;
             }
             else if( (line.find("<Name>") != string::npos) && ( line.find("</Name>")  != string::npos ) ){
                 name = GetTagValue("<Name>","</Name>",line);
-                IsGetName = true;
+                IsGetComponentName = true;
             }
             else if( (line.find("<Type>") != string::npos) && ( line.find("</Type>")  != string::npos ) ){
                 type = GetTagValue("<Type>","</Type>",line);
-                IsGetType = true;
+                IsGetComponentType = true;
             }
         }
         //找到</Node> 並且 <Node> 也有找到,也取得了Node中的標籤資料
-        if(IsFindComponentNode && line.find("</Node>") != string::npos && IsGetID && IsGetName && IsGetType){
-            components.push_back(new Component(id,type,name)); //加入Component
-            IsFindComponentNode = IsGetID = IsGetType = IsGetName = false; //從新設定回false
+        if(IsFindComponentNode && line.find("</Node>") != string::npos && IsGetComponentID && IsGetComponentName && IsGetComponentType){
+             //加入Component
+            components->SetComponentsFromLoadData(new Component(id,type,name));
+            //從新設定回false
+            IsFindComponentNode = IsGetComponentID = IsGetComponentType = IsGetComponentName = false;
+        }
+        if(line.find("</Components>") != string::npos){
+            IsFindComponents = false;
+        }
+
+        //找到開始尋找是在Group <Node>
+        if(IsFindGroupNode){
+            //如果有找到<ID>標籤與</ID>標籤,則擷取標籤中資料
+            if( (line.find("<ID>") != string::npos) && ( line.find("</ID>")  != string::npos ) ){
+                id = atoi( GetTagValue("<ID>","</ID>",line).c_str() );
+                IsGetGroupID = true;
+            }
+            else if( (line.find("<Name>") != string::npos) && ( line.find("</Name>")  != string::npos ) ){
+                name = GetTagValue("<Name>","</Name>",line);
+                IsGetGroupName = true;
+            }
+            else if( (line.find("<Member>") != string::npos) && ( line.find("</Member>")  != string::npos ) ){
+                members = GetTagValue("<Member>","</Member>",line);
+                IsGetGroupMembers = true;
+            }
+        }
+        //找到</Node> 並且 <Node> 也有找到,也取得了Node中的標籤資料
+        if(IsFindGroupNode && line.find("</Node>") != string::npos && IsGetGroupID && IsGetGroupName && IsGetGroupMembers){
+            //轉型回int member id
+            vector<int> membersId = ConvertToMembersId(members);
+            //加入Group
+            groups->SetGroupsFromLoadData(new Group(id,name,membersId));
+            //從新設定回false
+            IsFindGroupNode = IsGetGroupID = IsGetGroupMembers = IsGetGroupName = false;
+        }
+
+        if(line.find("</Group>") != string::npos){
+            IsFindGroups = false;
         }
     }
-    return components; //回傳檔案中所有的Components
+
+}
+//把從檔案取得的string型態資料轉回int
+vector<int> XMLManager::ConvertToMembersId(string memberStr){
+    vector<int> membersId;
+    for(unsigned int index =0 ;index <memberStr.size(); index++){
+        if( memberStr[index] == ',')
+            memberStr[index] = ' ' ;
+    }
+    stringstream ss;
+    ss << memberStr;
+    int memberId;
+    while(ss >>memberId){
+        cout << memberId <<endl;
+        membersId.push_back(memberId);
+    }
+
+    return membersId;
 }

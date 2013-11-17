@@ -22,9 +22,9 @@ void Components::DeleteComponentFromList(int id){
 vector<Component*>  Components::GetComponts(){
     return this->components;
 }
-//從Load檔案中取得Components
-void Components::SetComponentsFromLoadData(vector<Component *> components){
-    this->components = components;
+//從Load檔案中取得Components,記得先呼叫清除 ClearComponents
+void Components::SetComponentsFromLoadData(Component *components){
+    this->components.push_back(components);
 }
 //清除Components
 void Components::ClearComponents(){

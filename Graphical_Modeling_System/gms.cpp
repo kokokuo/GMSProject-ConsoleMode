@@ -35,7 +35,7 @@ int GMS::SaveXMLFormatRecord(string path){
 }
 int GMS::LoadXMLFormatRecord(string path){
     components.ClearComponents(); //清除原先的Components
-
+    groups.ClearAllGroup(); //清除原先的Group
     //尚未加入Group...
     int code = xmlManager.LoadXML(path,&components,&groups);
 
@@ -45,6 +45,13 @@ int GMS::LoadXMLFormatRecord(string path){
     if(components.GetComponts().size() >0){
         componentID = components.GetComponts()[components.GetComponts().size()-1]->GetID() +1;
     }
+
+    //Group,從載入的XML資料中去看
+    //如果有資料,取得檔案中最大的ID,並加一為現在的ID
+    if(groups.GetGroups().size() >0){
+        groupID = groups.GetGroupByVectorContainer()[groups.GetGroupByVectorContainer().size()-1]->GetID() +1;
+    }
+
 
     return code;
 }
@@ -93,6 +100,7 @@ bool GMS::CheckComponentIDHasBeenExisted(int id){
 map<string,Group*> GMS::GetGroups(){
     return groups.GetGroups();
 }
+
 
 //判斷這個MemberId是否存在指定的groupId(使用前請先透過 CheckGroupHasBeenExisted判斷Group有無存在)
 bool GMS::CheckMemberIDHasBeenTheGroup(int groupId, int memberId){

@@ -8,7 +8,8 @@ void Groups::AddGroup(Group *group){
     stringstream ss;
     ss << "G" << group->GetID(); //轉換成GID 作為map的Key值
     groups.insert( pair<string,Group*>(ss.str(),group) );
-
+    //紀錄vector模式中
+    groupsVec.push_back(group);
 }
 //加入Members到指定Group (使用前記得先呼叫 CheckGroupHasBeenExisted)判斷
 void Groups::AddMembersToGroup(int groupId,vector<int> members){
@@ -39,15 +40,21 @@ map<string,Group*> Groups::GetGroups(){
 }
 //清除所有Group
 void Groups::ClearAllGroup(){
+    groupsVec.clear();
     for(map<string,Group*>::iterator it =  this->groups.begin();it != this->groups.end();it++){
         delete it->second;
     }
     groups.clear();
 }
-//從檔案中從檔案中加入Group
+//從檔案中從檔案中加入Group ,記得先呼叫清除所有Group ClearAllGroup
 void Groups::SetGroupsFromLoadData(Group* group){
     stringstream ss;
     ss << "G" <<  group->GetID(); //轉換成GID 作為map的Key值直接取得value
     groups[ss.str()] = group;
-
+    //紀錄vector模式中
+    groupsVec.push_back(group);
+}
+//取得Vector容器裝置方式的Groups
+vector<Group*> Groups::GetGroupByVectorContainer(){
+    return this->groupsVec;
 }

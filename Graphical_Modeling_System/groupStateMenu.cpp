@@ -66,7 +66,7 @@ vector<int> GroupStateMenu::InputMembersIDAndCheck(string outputMessage,string* 
         ss << membersStr;
         int memberId;
         while(ss >>memberId){
-            cout << memberId <<endl;
+           // cout << memberId <<endl; 測試用
             membersId.push_back(memberId);
         }
     }
@@ -197,8 +197,6 @@ void GroupStateMenu::AddMembersToGroup(){
         }
         cout << "ID have been added to the group '" << gms->FindGroupByGroupId(inputGroupId)->GetName() <<"'.";
 
-        //增加ID編號
-        gms->AddGroupID();
     }
     else
         cout << "The group of ID '" << inputGroupId <<"' is not existed"; //ID不存在
