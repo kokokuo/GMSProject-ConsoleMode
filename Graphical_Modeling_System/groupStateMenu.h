@@ -26,7 +26,9 @@ private:
     //加入Members到Group
     void AddMembersToGroup();
     //輸入MembersID與判斷有無輸入錯誤
-    vector<int> InputMembersIDAndCheck(string outputMessage);
+    //為了取得輸入正確的member string用來印出,所以傳入 string pointer
+    vector<int> InputMembersIDAndCheck(string outputMessage, string* inputMemberStr);
+
     static const int COMMAND_NUMBER = 3;
 };
 

@@ -21,6 +21,9 @@ public:
     Group* GetGroup(int groupId);
     //取得所有Group
     map<string,Group*> GetGroups();
+    //從檔案中從檔案中加入Group
+    void SetGroupsFromLoadData(Group* group);
+    void ClearAllGroup();
 private:
     map<string,Group*> groups;
 };

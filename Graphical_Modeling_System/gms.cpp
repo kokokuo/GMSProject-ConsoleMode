@@ -31,13 +31,13 @@ void GMS::SwitchToOtherMenu(int Key){
 //把components存入檔案
 //尚未加入Group....
 int GMS::SaveXMLFormatRecord(string path){
-    return xmlManager.SaveXML(path,components);
+    return xmlManager.SaveXML(path,components,groups);
 }
 int GMS::LoadXMLFormatRecord(string path){
     components.ClearComponents(); //清除原先的Components
 
     //尚未加入Group...
-    int code = xmlManager.LoadXML(path,&components);
+    int code = xmlManager.LoadXML(path,&components,&groups);
 
 
     //設定Component現在的最大ID,從載入的XML資料中去看
@@ -104,4 +104,14 @@ bool GMS::CheckMemberIDHasBeenTheGroup(int groupId, int memberId){
 void GMS::AddNewGroup(int groupId, string name, vector<int> members){
     Group* newGroup = new Group(groupId,name,members);
     groups.AddGroup(newGroup);
+}
+
+//取得想要的Group
+Group* GMS::FindGroupByGroupId(int groupId){
+    return groups.GetGroup(groupId);
+
+}
+//加入members ID到Group
+void GMS::AddMembersToGroup(int groupId, vector<int> members){
+    groups.AddMembersToGroup(groupId,members);
 }

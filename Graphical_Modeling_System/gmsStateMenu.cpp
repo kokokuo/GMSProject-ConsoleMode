@@ -48,9 +48,12 @@ void GMSStateMenu::Update(){
                 break;
             case 8:
                 //display
+
                 //component
                 DisplayComponents();
+                cout << endl;
                 //group
+                DisplayGroups();
                 break;
             case 9:
                 //back
@@ -144,7 +147,16 @@ void GMSStateMenu::DisplayComponents(){
         printf("    %c     |   %2d    |    %s\n",(*it)->GetType()[0],(*it)->GetID(),(*it)->GetName().c_str());
     }
 }
-
+void GMSStateMenu::DisplayGroups(){
+    map<string,Group*> groups = this->gms->GetGroups();
+    cout << "Groups:" << endl;
+    cout << "------------------------------------------------------" <<endl;
+    cout << "   GID   |   Name    |    Member    " <<endl;
+    cout << "------------------------------------------------------" <<endl;
+    for(map<string,Group*>::iterator it = groups.begin();it != groups.end();it++){
+        printf("    %s     |   %s    |    %s\n",it->first.c_str(),(it->second)->GetName().c_str(),(it->second)->GetMembersIdByStringFormat().c_str());
+    }
+}
 
 string GMSStateMenu::GetXMLPathInput(){
     string filePath;

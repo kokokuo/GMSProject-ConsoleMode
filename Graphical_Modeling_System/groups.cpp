@@ -37,3 +37,17 @@ Group* Groups::GetGroup(int groupId){
 map<string,Group*> Groups::GetGroups(){
     return this->groups;
 }
+//清除所有Group
+void Groups::ClearAllGroup(){
+    for(map<string,Group*>::iterator it =  this->groups.begin();it != this->groups.end();it++){
+        delete it->second;
+    }
+    groups.clear();
+}
+//從檔案中從檔案中加入Group
+void Groups::SetGroupsFromLoadData(Group* group){
+    stringstream ss;
+    ss << "G" <<  group->GetID(); //轉換成GID 作為map的Key值直接取得value
+    groups[ss.str()] = group;
+
+}

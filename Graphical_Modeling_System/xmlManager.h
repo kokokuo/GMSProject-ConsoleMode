@@ -7,8 +7,12 @@
 
 #include <fstream>
 #include <vector>
+#include <map>
 #include "component.h"
 #include "components.h"
+#include "group.h"
+#include "groups.h"
+
 
 using namespace std;
 
@@ -16,13 +20,13 @@ class XMLManager
 {
 public:
     XMLManager();
-    int SaveXML(string fileName, Components components); //存檔XML,如果不存在則創建檔案
+    int SaveXML(string fileName, Components components,Groups groups); //存檔XML,如果不存在則創建檔案
     //載入XML檔案,第二個參數是透過指標的方式拿到Parser好的Components資料,所以是Components*
-    int LoadXML(string filenName, Components* components);
+    int LoadXML(string filenName, Components* components,Groups* groups);
 
 private:
     //加入Component到XML
-    void AddComponentToXMLFile(vector<Component *> components);
+    void AddComponentAndGroupToXMLFile(vector<Component *> components,map<string,Group*> groups);
     //作XML的Parser
     vector<Component*> ParserXMLFile();
 

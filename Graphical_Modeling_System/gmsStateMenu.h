@@ -26,6 +26,8 @@ private:
     int GetComponentInput(); //選擇component編號的輸入
     string GetComponentType(int type); //取得類型的字串名稱
 
+    void DisplayGroups(); //顯示Groups
+
     static const int COMMAND_NUMBER =9; //指令的編號
     static const int COMPONENTS_NUMBER =3; //component的編號
 };

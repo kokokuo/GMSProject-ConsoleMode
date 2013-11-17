@@ -42,6 +42,9 @@ public:
     //取得Groups
     map<string,Group*> GetGroups();
 
+    //取得想要的Group
+    Group* FindGroupByGroupId(int groupId);
+
     //取得產生Component到目前的最大ID
     int GetCurrentComponentMakerID();
 
@@ -64,6 +67,9 @@ public:
 
     //加入新的Group
     void AddNewGroup(int groupId,string name,vector<int> members);
+
+    //加入members ID到Group
+    void AddMembersToGroup(int groupId,vector<int> members);
 private:
     int componentID; //Component的編號
     int groupID; //group的編號
