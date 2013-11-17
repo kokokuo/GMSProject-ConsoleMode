@@ -27,7 +27,12 @@ SOURCES += main.cpp \
     groupStateMenu.cpp \
     components.cpp \
     group.cpp \
-    groups.cpp
+    groups.cpp \
+    command.cpp \
+    addComponentCommand.cpp \
+    deleteComponentCommand.cpp \
+    commandManager.cpp \
+    addNewGroupCommand.cpp
 
 HEADERS += \
     gms.h \
@@ -41,4 +46,9 @@ HEADERS += \
     groupStateMenu.h \
     components.h \
     group.h \
-    groups.h
+    groups.h \
+    command.h \
+    addComponentCommand.h \
+    deleteComponentCommand.h \
+    commandManager.h \
+    addNewGroupCommand.h

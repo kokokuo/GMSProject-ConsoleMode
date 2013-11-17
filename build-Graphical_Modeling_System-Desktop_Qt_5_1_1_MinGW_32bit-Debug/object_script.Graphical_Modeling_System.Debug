@@ -12,4 +12,9 @@ INPUT(
 ./debug\components.o
 ./debug\group.o
 ./debug\groups.o
+./debug\command.o
+./debug\addComponentCommand.o
+./debug\deleteComponentCommand.o
+./debug\commandManager.o
+./debug\addNewGroupCommand.o
 );

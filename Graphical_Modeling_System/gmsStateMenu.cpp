@@ -42,9 +42,21 @@ void GMSStateMenu::Update(){
                 break;
             case 6:
                 //redo
+                if(this->gms->Redo()){
+                    cout << "Redo Successfully" <<endl;
+                }
+                else{
+                    cout << "Can't Redo" <<endl;
+                }
                 break;
             case 7:
                 //undo
+                if(this->gms->Undo()){
+                    cout << "Undo Successfully" <<endl;
+                }
+                else{
+                    cout << "Can't Undo" <<endl;
+                }
                 break;
             case 8:
                 //display
@@ -95,13 +107,11 @@ void GMSStateMenu::AddComponents(){
     string componentName;
     getline(cin,componentName);
 
-    //透過GMS實作加入Component
-    this->gms->AddComponents(gms->GetCurrentComponentMakerID(),GetComponentType(choice),componentName);
 
     //顯示加入的資料
     cout << "A components of " << GetComponentType(choice) << " added, name:" << componentName << ", ID: " << gms->GetCurrentComponentMakerID() <<endl;
-
-    this->gms->AddComponentID(); //ID累加(ID的部分都是透過GMS來完成,確保由GMS系統在管理Component ID)
+    //透過GMS實作加入Component
+    this->gms->AddComponents(GetComponentType(choice),componentName);
 
 
 }

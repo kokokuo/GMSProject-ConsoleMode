@@ -12,4 +12,9 @@ INPUT(
 ./release\components.o
 ./release\group.o
 ./release\groups.o
+./release\command.o
+./release\addComponentCommand.o
+./release\deleteComponentCommand.o
+./release\commandManager.o
+./release\addNewGroupCommand.o
 );

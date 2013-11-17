@@ -4,8 +4,7 @@
 GMS::GMS()
 {
     isWorking = true;
-    this->componentID = 1;
-    this->groupID = 1;
+
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::HomeMenuKey,new HomeStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GMSMenuKey,new GMSStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GroupMenuKey,new GroupStateMenu(this)));
@@ -36,34 +35,26 @@ int GMS::SaveXMLFormatRecord(string path){
 int GMS::LoadXMLFormatRecord(string path){
     components.ClearComponents(); //清除原先的Components
     groups.ClearAllGroup(); //清除原先的Group
-    //尚未加入Group...
+
     int code = xmlManager.LoadXML(path,&components,&groups);
-
-
-    //設定Component現在的最大ID,從載入的XML資料中去看
-    //如果有資料,取得檔案中最大的ID,並加一為現在的ID
-    if(components.GetComponts().size() >0){
-        componentID = components.GetComponts()[components.GetComponts().size()-1]->GetID() +1;
-    }
-
-    //Group,從載入的XML資料中去看
-    //如果有資料,取得檔案中最大的ID,並加一為現在的ID
-    if(groups.GetGroups().size() >0){
-        groupID = groups.GetGroupByVectorContainer()[groups.GetGroupByVectorContainer().size()-1]->GetID() +1;
-    }
-
 
     return code;
 }
 
-void GMS::AddComponents(int id, string componentType, string componentName){
-    components.AddComponentToList(id,componentType,componentName);
+void GMS::AddComponents(string componentType, string componentName){
 
+    AddComponentCommand* addCmd = new AddComponentCommand(&components,componentType,componentName);
+    cmdManager.execute(addCmd);
+    //Component *component = new Component(components.GetCurrentGeneratedComponentID(),componentType,componentName);
+    //components.AddComponentToList(component);
+    //components.AddComponentID();
 }
 //刪除Component與判斷有無存在
 bool GMS::DeleteComponent(int id){
     if(this->components.CheckIDHasBeenExisted(id)){
-        this->components.DeleteComponentFromList(id);
+        DeleteComponentCommand* delCmd = new DeleteComponentCommand(&components,id);
+        cmdManager.execute(delCmd);
+        //this->components.DeleteComponentFromList(id);
         return true; //告知有刪除掉
     }
     return false; //沒有刪除掉 因為不存在
@@ -74,19 +65,13 @@ vector<Component*> GMS::GetComponents(){
 }
 //取得目前生產的ComponentsID
 int GMS::GetCurrentComponentMakerID(){
-    return this->componentID;
+    return this->components.GetCurrentGeneratedComponentID();
 }
 //取得目前生產的GroupID
 int GMS::GetCurrentGroupMakerID(){
-    return this->groupID;
-}
-void GMS::AddComponentID(){
-    componentID++;
+    return this->groups.GetCurrentGeneratedGroupId();
 }
 
-void GMS::AddGroupID(){
-    groupID++;
-}
 //判斷group有無存在
 bool GMS::CheckGroupHasBeenExisted(int groupId){
     return this->groups.CheckGroupHasBeenExisted(groupId);
@@ -109,9 +94,14 @@ bool GMS::CheckMemberIDHasBeenTheGroup(int groupId, int memberId){
 
 }
 //加入新的Group
-void GMS::AddNewGroup(int groupId, string name, vector<int> members){
-    Group* newGroup = new Group(groupId,name,members);
-    groups.AddGroup(newGroup);
+void GMS::AddNewGroup(string name, vector<int> members){
+    AddNewGroupCommand* addGroupCmd = new AddNewGroupCommand(&groups,name,members);
+    cmdManager.execute(addGroupCmd);
+    //stringstream ss;
+    //ss << "G" << groups.GetCurrentGeneratedGroupId(); //轉換成GID 作為map的Key值
+    //Group* newGroup = new Group(groups.GetCurrentGeneratedGroupId(),name,members);
+    //groups.AddGroup(ss.str(),newGroup);
+    //groups.AddGroupID();
 }
 
 //取得想要的Group
@@ -122,4 +112,10 @@ Group* GMS::FindGroupByGroupId(int groupId){
 //加入members ID到Group
 void GMS::AddMembersToGroup(int groupId, vector<int> members){
     groups.AddMembersToGroup(groupId,members);
+}
+bool GMS::Redo(){
+   return cmdManager.redo();
+}
+bool GMS::Undo(){
+   return cmdManager.undo();
 }

@@ -108,12 +108,10 @@ void GroupStateMenu::AddNewGroup(){
     //加入新的Group
     stringstream ss;
     ss << "G" << gms->GetCurrentGroupMakerID() ;
-    gms->AddNewGroup(gms->GetCurrentGroupMakerID(),inputGroupName,wantAddMembersId);
+
     //給予加入成功的回饋
     cout << "The new group '" << inputGroupName << "' has been created, ID:" << ss.str() << ",members:" << inputMemberStr <<endl;
-
-    //增加ID編號
-    gms->AddGroupID();
+    gms->AddNewGroup(inputGroupName,wantAddMembersId);
 
 
 }

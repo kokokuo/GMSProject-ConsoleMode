@@ -13,6 +13,10 @@
 #include "xmlManager.h"
 #include "group.h"
 #include "groups.h"
+#include "commandManager.h"
+#include "addComponentCommand.h"
+#include "deleteComponentCommand.h"
+#include "addNewGroupCommand.h"
 
 using namespace std;
 
@@ -31,7 +35,7 @@ public:
     int LoadXMLFormatRecord(string path);
 
     //實作加入Components部分,id,類型,名稱
-    void AddComponents(int id, string componentType, string componentName);
+    void AddComponents(string componentType, string componentName);
 
     //刪除Component
     bool DeleteComponent(int id);
@@ -51,11 +55,7 @@ public:
     //取得產生Group到目前的最大ID
     int GetCurrentGroupMakerID();
 
-    //累加ComponentID
-    void AddComponentID();
 
-    //累加GroupID
-    void AddGroupID();
 
     //判斷GroupId有無存在
     bool CheckGroupHasBeenExisted(int groupId);
@@ -66,20 +66,22 @@ public:
     bool CheckMemberIDHasBeenTheGroup(int groupId,int memberId);
 
     //加入新的Group
-    void AddNewGroup(int groupId,string name,vector<int> members);
+    void AddNewGroup(string name, vector<int> members);
 
     //加入members ID到Group
     void AddMembersToGroup(int groupId,vector<int> members);
+
+    bool Redo();
+    bool Undo();
 private:
-    int componentID; //Component的編號
-    int groupID; //group的編號
+
     map<int,TextStateMenu*> textMenuManager; //記錄所有選單的物件
     TextStateMenu *currentTextMenu; //切換至要執行的選單指標
     Components components; //記錄所有的Components
     bool isWorking; //判斷GMS系痛是否在執行中的變數
     XMLManager xmlManager; //實際負責XML所有部分的操作,被GMS系統擁有,調用
-
     Groups groups; //紀錄Groups
+    CommandManager cmdManager;
 };
 
 #endif // GMS_H

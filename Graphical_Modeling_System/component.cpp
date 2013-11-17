@@ -14,6 +14,11 @@ Component::Component(int id, string componentType, string name)
     this->type = componentType;
     this->name = name;
 }
+Component::Component( Component& c){
+    this->id = c.GetID();
+    this->type = c.GetType();
+    this->name = c.GetName();
+}
 int Component::GetID(){
     return this->id;
 }
@@ -24,3 +29,4 @@ string Component::GetName(){
 string Component::GetType(){
     return this->type;
 }
+
