@@ -104,7 +104,7 @@ void GroupStateMenu::AddNewGroup(){
             cout << endl;
         }
 
-    }while(notExistComponentsID.size() != 0); //如果有不存在的ID 則再要求使用者輸入一次 (即便現在完全無Component資料.... 問了助教沒回應...)
+    }while(notExistComponentsID.size() != 0); //如果有不存在的ID 則再要求使用者輸入一次
 
     //加入新的Group
     stringstream ss;
@@ -186,7 +186,7 @@ void GroupStateMenu::AddMembersToGroup(){
                 cout << endl;
             }
 
-        //如果有已經存在Group的Memebr 或不存在的Component ID  則再要求使用者輸入一次 (即便現在整個完全無Component資料.... 問了助教沒回應...)
+        //如果有已經存在Group的Memebr 或不存在的Component ID  則再要求使用者輸入一次
         }while(notExistComponentsID.size() != 0 || hasExistedGroupComponentId.size() >0 );
 
         //加入新Members

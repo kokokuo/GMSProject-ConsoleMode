@@ -24,7 +24,8 @@ public:
     int SaveXML(string fileName, Components components,Groups groups);
     //載入XML檔案,第二個參數是透過指標的方式拿到Parser好的Components資料,所以是Components*
     int LoadXML(string filenName, Components* components,Groups* groups);
-
+    //確認檔案路徑是否存在
+    int CheckFilePathIsExisted(string filenName);
 private:
     //加入Component到XML
     void AddComponentAndGroupToXMLFile(vector<Component *> components,map<string,Group*> groups);

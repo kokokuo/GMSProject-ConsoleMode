@@ -4,6 +4,23 @@ XMLManager::XMLManager()
 {
 
 }
+//判斷檔案路徑是否存在
+int XMLManager::CheckFilePathIsExisted(string filePath){
+    //開檔,但是不會自動create(以讀檔的方式才能確保不會自動創建)
+    xmlFile.open(filePath.c_str(),ios::in);
+
+    //透過檢查是否開啟來判斷有無存在檔案
+    if(xmlFile.is_open()){
+        xmlFile.close();
+        return XMLErrorCode::OK;
+    }
+    else{
+        xmlFile.close();
+        //不存在
+        return XMLErrorCode::Open_NotExist;
+    }
+
+}
 int XMLManager::SaveXML(string fileName, Components components, Groups groups){
     //創建檔案
     xmlFile.open(fileName.c_str(),ios::out);

@@ -33,13 +33,19 @@ int GMS::SaveXMLFormatRecord(string path){
 }
 //載入components與groups
 int GMS::LoadXMLFormatRecord(string path){
-    components.ClearComponents(); //清除原先的Components
-    groups.ClearAllGroup(); //清除原先的Group
-    cmdManager.ClearCmd(); //清除指令(重新開始)
-
-    int code = xmlManager.LoadXML(path,&components,&groups);
-
+    int code =xmlManager.CheckFilePathIsExisted(path);
+    //如果檔案存在
+    if(code == XMLErrorCode::OK){
+        components.ClearComponents(); //清除原先的Components
+        groups.ClearAllGroup(); //清除原先的Group
+        cmdManager.ClearCmd(); //清除指令(重新開始)
+        code = xmlManager.LoadXML(path,&components,&groups);
+    }
     return code;
+
+
+
+
 }
 
 void GMS::AddComponents(string componentType, string componentName){
