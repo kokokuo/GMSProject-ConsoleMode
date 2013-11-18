@@ -26,6 +26,8 @@ public:
     void AddMembers(vector<int> members);
     //確認MemberID是否存在
     bool CheckMemberHasBeenExisted(int memberId);
+    //移除成員
+    void RemoveMembers(vector<int> wantToRemoveId);
 private:
     int id;
     string groupName;

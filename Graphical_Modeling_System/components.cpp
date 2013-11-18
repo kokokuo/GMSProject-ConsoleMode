@@ -68,6 +68,7 @@ bool Components::CheckIDHasBeenExisted(int id){
     return false;
 
 }
+//取得目前生產出的ID編號
 int Components::GetCurrentGeneratedComponentID(){
     if(componentID ==1)
         return componentID;

@@ -73,7 +73,7 @@ vector<int> GroupStateMenu::InputMembersIDAndCheck(string outputMessage,string* 
     return membersId;
 }
 void GroupStateMenu::AddNewGroup(){
-    vector<int> wantAddMembersId;
+    vector<int> wantAddMembersId; //使用者想要加入的MembersID
     //檢查ID是否存在於Components
     vector <int> notExistComponentsID;
     cout << "Enter group name" <<endl;
@@ -82,6 +82,7 @@ void GroupStateMenu::AddNewGroup(){
     string inputGroupName,inputMemberStr;
     cin >> inputGroupName;
     cin.ignore(INT_MAX,'\n');
+    //此部分取得要加入的MembersID並判斷是否存在於Component中並給於回饋
     do{
         wantAddMembersId.clear();
         notExistComponentsID.clear();
@@ -117,14 +118,14 @@ void GroupStateMenu::AddNewGroup(){
 }
 
 void GroupStateMenu::AddMembersToGroup(){
-    vector<int> wantAddMembersId;
+    vector<int> wantAddMembersId; //使用者想要加入的MembersID
 
     //檢查已經存在此Group中的component ID
     vector <int> hasExistedGroupComponentId;
     //檢查ID是否存在於Components
     vector <int> notExistComponentsID;
-    string inputMemberStr;
-    string inputGroupIdStr; //取得字串型態的輸入
+    string inputMemberStr; //取得字串型態的Members輸入
+    string inputGroupIdStr; //取得字串型態的Group輸入
     int inputGroupId;
 
     //取得輸入的Group ID
@@ -140,10 +141,13 @@ void GroupStateMenu::AddMembersToGroup(){
 
     //檢查Group ID是否存在
     if(gms->CheckGroupHasBeenExisted((inputGroupId))){
+        //此部分取得要加入的MembersID並判斷是否存在於Component中並給於回饋
         do{
+            //清除記錄的資料
             wantAddMembersId.clear();
             hasExistedGroupComponentId.clear();
             notExistComponentsID.clear();
+
             //取得輸入的ID
             wantAddMembersId = InputMembersIDAndCheck("Enter Members",&inputMemberStr);
             //判斷輸入的ID是否是存在的Component

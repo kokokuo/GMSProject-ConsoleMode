@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     addComponentCommand.cpp \
     deleteComponentCommand.cpp \
     commandManager.cpp \
-    addNewGroupCommand.cpp
+    addNewGroupCommand.cpp \
+    addMembersToGroupCommand.cpp
 
 HEADERS += \
     gms.h \
@@ -51,4 +52,5 @@ HEADERS += \
     addComponentCommand.h \
     deleteComponentCommand.h \
     commandManager.h \
-    addNewGroupCommand.h
+    addNewGroupCommand.h \
+    addMembersToGroupCommand.h

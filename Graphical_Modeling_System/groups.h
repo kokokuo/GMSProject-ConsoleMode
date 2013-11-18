@@ -39,10 +39,13 @@ public:
 
     //透過Id取得Component
     Group* GetGroupById(int id);
+
+    //從指定的Group中移除Members
+    void DeleteMembersFromGroupById(int groupId,vector<int> removeMembers);
 private:
     map<string,Group*> groups;
-    vector<Group*> groupsVec;
-     int groupID; //group的編號
+    vector<Group*> groupsVec; //以vector的方式紀錄groups
+    int groupID; //group的編號
 };
 
 #endif // GROUPS_H

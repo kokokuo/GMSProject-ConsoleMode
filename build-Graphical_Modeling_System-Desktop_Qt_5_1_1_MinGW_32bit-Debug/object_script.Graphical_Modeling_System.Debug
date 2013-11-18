@@ -17,4 +17,5 @@ INPUT(
 ./debug\deleteComponentCommand.o
 ./debug\commandManager.o
 ./debug\addNewGroupCommand.o
+./debug\addMembersToGroupCommand.o
 );

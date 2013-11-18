@@ -94,3 +94,10 @@ Group* Groups::GetGroupById(int id){
     ss << "G" << id; //轉換成GID 作為map的Key值直接取得value
     return groups[ss.str()];
 }
+//給予指定的Group ID移除Members
+void Groups::DeleteMembersFromGroupById(int groupId, vector<int> removeMembers){
+    stringstream ss;
+    ss << "G" << groupId; //轉換成GID 作為map的Key值直接取得value
+    //移除Members
+    groups[ss.str()]->RemoveMembers(removeMembers);
+}

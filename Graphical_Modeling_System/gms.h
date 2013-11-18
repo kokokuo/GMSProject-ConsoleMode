@@ -17,6 +17,7 @@
 #include "addComponentCommand.h"
 #include "deleteComponentCommand.h"
 #include "addNewGroupCommand.h"
+#include "addMembersToGroupCommand.h"
 
 using namespace std;
 
@@ -71,8 +72,8 @@ public:
     //加入members ID到Group
     void AddMembersToGroup(int groupId,vector<int> members);
 
-    bool Redo();
-    bool Undo();
+    bool Redo(); //回傳true表示執行成功,否之師失敗(可能redo到最新的指令)
+    bool Undo(); //回傳true表示執行成功,反之則失敗(可能uedo到stack沒資料)
 private:
 
     map<int,TextStateMenu*> textMenuManager; //記錄所有選單的物件
@@ -81,7 +82,7 @@ private:
     bool isWorking; //判斷GMS系痛是否在執行中的變數
     XMLManager xmlManager; //實際負責XML所有部分的操作,被GMS系統擁有,調用
     Groups groups; //紀錄Groups
-    CommandManager cmdManager;
+    CommandManager cmdManager; //Invoker :指令處理管理員,負責執行個指令與紀錄指令做redo與undo
 };
 
 #endif // GMS_H

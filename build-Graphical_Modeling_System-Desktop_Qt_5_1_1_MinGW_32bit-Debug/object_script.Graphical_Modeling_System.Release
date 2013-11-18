@@ -17,4 +17,5 @@ INPUT(
 ./release\deleteComponentCommand.o
 ./release\commandManager.o
 ./release\addNewGroupCommand.o
+./release\addMembersToGroupCommand.o
 );

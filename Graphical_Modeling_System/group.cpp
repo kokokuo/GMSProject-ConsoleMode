@@ -41,6 +41,21 @@ void Group::AddMembers(vector<int> members){
     for(vector<int>::iterator it = members.begin();it != members.end();it++){
         this->membersId.push_back((*it));
     }
+
+    //排序
+    int temp;
+    for (unsigned int i = 1; i < membersId.size(); i++)
+    {
+        for (unsigned int j = 0; j < membersId.size() - i; j++)
+        {
+            if (membersId[j] > membersId[j + 1])
+            {
+                temp = membersId[j];
+                membersId[j] = membersId[j + 1];
+                membersId[j + 1] = temp;
+            }
+        }
+    }
 }
 //判斷memberID有無存在
 bool Group::CheckMemberHasBeenExisted(int memberId){
@@ -50,4 +65,14 @@ bool Group::CheckMemberHasBeenExisted(int memberId){
         }
     }
     return false;
+}
+void Group::RemoveMembers(vector<int> wantToRemoveId){
+    for(vector<int>::iterator remvoeIt = wantToRemoveId.begin();remvoeIt != wantToRemoveId.end();remvoeIt++){
+        for(vector<int>::iterator it = membersId.begin();it != membersId.end();it++){
+            if((*it) == (*remvoeIt) ){
+                membersId.erase(it);
+                break;
+            }
+        }
+    }
 }

@@ -17,4 +17,5 @@ void DeleteComponentCommand::execute(){
 }
 void DeleteComponentCommand::unexecute(){
     this->components->AddComponentToList(removedComponent);
+    //不需遞減ID 此部分只加放回移除的Component
 }

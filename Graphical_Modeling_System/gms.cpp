@@ -27,14 +27,15 @@ void GMS::SwitchToOtherMenu(int Key){
     this->currentTextMenu = textMenuManager[Key];
 }
 
-//把components存入檔案
-//尚未加入Group....
+//把components 與groups存入檔案
 int GMS::SaveXMLFormatRecord(string path){
     return xmlManager.SaveXML(path,components,groups);
 }
+//載入components與groups
 int GMS::LoadXMLFormatRecord(string path){
     components.ClearComponents(); //清除原先的Components
     groups.ClearAllGroup(); //清除原先的Group
+    cmdManager.ClearCmd(); //清除指令(重新開始)
 
     int code = xmlManager.LoadXML(path,&components,&groups);
 
@@ -43,8 +44,10 @@ int GMS::LoadXMLFormatRecord(string path){
 
 void GMS::AddComponents(string componentType, string componentName){
 
+    //使用Command加入
     AddComponentCommand* addCmd = new AddComponentCommand(&components,componentType,componentName);
     cmdManager.execute(addCmd);
+
     //Component *component = new Component(components.GetCurrentGeneratedComponentID(),componentType,componentName);
     //components.AddComponentToList(component);
     //components.AddComponentID();
@@ -52,6 +55,7 @@ void GMS::AddComponents(string componentType, string componentName){
 //刪除Component與判斷有無存在
 bool GMS::DeleteComponent(int id){
     if(this->components.CheckIDHasBeenExisted(id)){
+        //使用Command刪除
         DeleteComponentCommand* delCmd = new DeleteComponentCommand(&components,id);
         cmdManager.execute(delCmd);
         //this->components.DeleteComponentFromList(id);
@@ -59,7 +63,7 @@ bool GMS::DeleteComponent(int id){
     }
     return false; //沒有刪除掉 因為不存在
 }
-
+//取得所有Components
 vector<Component*> GMS::GetComponents(){
     return this->components.GetComponts();
 }
@@ -95,6 +99,7 @@ bool GMS::CheckMemberIDHasBeenTheGroup(int groupId, int memberId){
 }
 //加入新的Group
 void GMS::AddNewGroup(string name, vector<int> members){
+    //使用Command加入新的Group
     AddNewGroupCommand* addGroupCmd = new AddNewGroupCommand(&groups,name,members);
     cmdManager.execute(addGroupCmd);
     //stringstream ss;
@@ -111,7 +116,10 @@ Group* GMS::FindGroupByGroupId(int groupId){
 }
 //加入members ID到Group
 void GMS::AddMembersToGroup(int groupId, vector<int> members){
-    groups.AddMembersToGroup(groupId,members);
+    //使用Command加入Members到指定的Group
+    AddMembersToGroupCommand* addMembersCmd = new AddMembersToGroupCommand(&groups,groupId,members);
+    cmdManager.execute(addMembersCmd);
+    //groups.AddMembersToGroup(groupId,members);
 }
 bool GMS::Redo(){
    return cmdManager.redo();

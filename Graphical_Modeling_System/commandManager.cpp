@@ -31,6 +31,7 @@ bool CommandManager::redo(){
         Command* c = this->redoCmds.top();
         this->redoCmds.pop();
         c->execute(); // redo the command
+        this->undoCmds.push(c);
         return true;
     }
     else
@@ -46,4 +47,16 @@ bool CommandManager::undo(){
     }
     else
         return false;
+}
+void CommandManager::ClearCmd(){
+    while (!this->undoCmds.empty()) {
+        Command* c = undoCmds.top();
+        undoCmds.pop();
+        delete c;
+    }
+    while (!this->redoCmds.empty()) {
+        Command* c = redoCmds.top();
+        redoCmds.pop();
+        delete c;
+    }
 }
