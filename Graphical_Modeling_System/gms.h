@@ -18,6 +18,8 @@
 #include "deleteComponentCommand.h"
 #include "addNewGroupCommand.h"
 #include "addMembersToGroupCommand.h"
+#include "editComponentNameCommand.h"
+#include "editComponentTypeCommand.h"
 
 using namespace std;
 
@@ -37,7 +39,11 @@ public:
 
     //實作加入Components部分,id,類型,名稱
     void AddComponents(string componentType, string componentName);
+    //編輯Component名稱
+    void EditComponentName(int id,string newName);
 
+    //編輯Component Type
+    void EditComponentType(int id,string newType);
     //刪除Component
     bool DeleteComponent(int id);
 

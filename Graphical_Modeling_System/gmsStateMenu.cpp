@@ -35,7 +35,7 @@ void GMSStateMenu::Update(){
                 break;
             case 4:
                 //edit
-
+                EditComponent();
                 break;
             case 5:
                 //delete
@@ -142,13 +142,30 @@ void GMSStateMenu::DeleteComponent(){
 
 }
 
-bool GMSStateMenu::SelectEditItem(int editId){
-    return false;
+int GMSStateMenu::EditComponentType(){
+    string input;
+    int type;
+
+    while(true){
+        cout << "[1]Cube [2]Pyramid [3]Sphere [4]Line" <<endl;
+        cout << "> ";
+        cin >> input;
+        cin.ignore(INT_MAX,'\n');
+        type = atoi(input.c_str());
+
+        if(type >0 && type <=4 ){
+            break;
+        }
+        else{
+            cout << "The option is not exist,select again" << endl;
+        }
+    }
+    return type;
 }
 
 void GMSStateMenu::EditComponent(){
-    string input;
-    int editId,choice;
+    string input,editName;
+    int editId,choice,type;
     cout << "Input Component ID:" <<endl;
     cout << "> " ;
 
@@ -159,11 +176,37 @@ void GMSStateMenu::EditComponent(){
     bool isExist =gms->GetComponents().CheckIDHasBeenExisted(editId);
     if(isExist){
         cout << "Select item or Return to Menu:" <<endl;
+        cout << "[1]\"Type\"[2]\"Name\"[3]Return to Menu" <<endl;
         cout << "> ";
+
         cin >> input;
         cin.ignore(INT_MAX,'\n');
         choice = atoi(input.c_str());
+
+        switch(choice){
+        case 1:
+            //進入編輯ID的Type選項
+            type = EditComponentType();
+            gms->EditComponentType(editId,GetComponentType(type));
+            cout << "Type edit success.";
+            break;
+        case 2:
+            //編輯名稱
+            cout << "Input new name:" <<endl;
+            getline(cin,editName);
+            gms->EditComponentName(editId,editName);
+            cout << "Name edit success.";
+            break;
+        case 3:
+            break;
+        default:
+            cout << "No this option!" <<endl;
+            break;
+        }
  //尚未
+    }
+    else{
+        cout << "The Component ID \"" << editId << "\" is not exist" <<endl;
     }
 
 

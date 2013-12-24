@@ -22,7 +22,7 @@ private:
     void DeleteComponent(); //刪除Compontent;
     int GetComponentInput(); //選擇component編號的輸入
     void EditComponent(); //編輯Component資訊
-    bool SelectEditItem(int editId); //編輯ID的Type或Name
+    int EditComponentType(); //編輯ID的Type或Name
     string GetComponentType(int type); //取得類型的字串名稱
 
     void DisplayGroups(); //顯示Groups

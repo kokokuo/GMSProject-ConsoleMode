@@ -48,6 +48,15 @@ int GMS::LoadXMLFormatRecord(string path){
 
 }
 
+void GMS::EditComponentName(int id, string newName){
+    EditComponentNameCommand *editNameCmd = new EditComponentNameCommand(&components,id,newName);
+    cmdManager.execute(editNameCmd);
+}
+void GMS::EditComponentType(int id, string newType){
+    EditComponentTypeCommand *editTypeCmd = new EditComponentTypeCommand(&components,id,newType);
+    cmdManager.execute(editTypeCmd);
+
+}
 void GMS::AddComponents(string componentType, string componentName){
 
     //使用Command加入
