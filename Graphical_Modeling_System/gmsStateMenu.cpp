@@ -142,7 +142,7 @@ void GMSStateMenu::DeleteComponent(){
 
 }
 
-int GMSStateMenu::EditComponentType(){
+int GMSStateMenu::ChooseEditComponentType(){
     string input;
     int type;
 
@@ -186,7 +186,7 @@ void GMSStateMenu::EditComponent(){
         switch(choice){
         case 1:
             //進入編輯ID的Type選項
-            type = EditComponentType();
+            type = ChooseEditComponentType();
             gms->EditComponentType(editId,GetComponentType(type));
             cout << "Type edit success.";
             break;
