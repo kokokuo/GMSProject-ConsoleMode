@@ -16,11 +16,11 @@ public:
     //刪除Components
     void DeleteComponentFromList(int id);
     //取得Component
-    vector<Component*> GetComponts();
+    vector<Component*> GetAllComponent();
     //從Load檔案中取得Components
     void SetComponentsFromLoadData(Component* component);
     //清除Components
-    void ClearComponents();
+    void ClearAll();
     //判斷ID是否存在
     bool CheckIDHasBeenExisted(int id);
     //取得目前生產的ID

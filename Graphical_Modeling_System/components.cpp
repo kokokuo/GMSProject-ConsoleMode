@@ -33,7 +33,7 @@ void Components::DeleteComponentFromList(int id){
         }
     }
 }
-vector<Component*>  Components::GetComponts(){
+vector<Component*>  Components::GetAllComponent(){
     return this->components;
 }
 //從Load檔案中取得Components,記得先呼叫清除 ClearComponents
@@ -49,7 +49,7 @@ void Components::SetComponentsFromLoadData(Component *component){
 
 }
 //清除Components
-void Components::ClearComponents(){
+void Components::ClearAll(){
     //重新載入新的XML,要把原先的資料先全部移除,避免有Memory Leak,再從新添加從XML載入的資料
     if(components.size() > 0){
         for(vector<Component*>::iterator it = components.begin();it != components.end();it++){

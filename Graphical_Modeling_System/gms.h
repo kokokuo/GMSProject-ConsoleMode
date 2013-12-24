@@ -42,7 +42,7 @@ public:
     bool DeleteComponent(int id);
 
     //取得所有Component
-    vector<Component*> GetComponents();
+    Components GetComponents();
 
     //取得Groups
     map<string,Group*> GetGroups();

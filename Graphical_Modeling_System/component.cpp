@@ -4,7 +4,7 @@
 int ComponentType::CubeType =1;
 int ComponentType::PyramidType = 2;
 int ComponentType::SphereType = 3;
-
+int ComponentType::LineType = 4;
 //=================================================
 
 //Component

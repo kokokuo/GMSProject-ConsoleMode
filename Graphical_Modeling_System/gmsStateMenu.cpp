@@ -11,13 +11,14 @@ void GMSStateMenu::DisplayMenu(){
     cout << "[1] Load a XML record" <<endl;
     cout << "[2] Save a XML record" <<endl;
     cout << "[3] Add component" <<endl;
-    cout << "[4] Delete" <<endl;
-    cout << "[5] Group" <<endl;
-    cout << "[6] Redo" <<endl;
-    cout << "[7] Undo" <<endl;
-    cout << "[8] Display current table" <<endl;
-    cout << "[9] Back to welcome menu" <<endl;
-     cout << "> ";
+    cout << "[4] Edit" <<endl;
+    cout << "[5] Delete" <<endl;
+    cout << "[6] Group" <<endl;
+    cout << "[7] Redo" <<endl;
+    cout << "[8] Undo" <<endl;
+    cout << "[9] Display current table" <<endl;
+    cout << "[10] Back to welcome menu" <<endl;
+    cout << "> ";
 }
 void GMSStateMenu::Update(){
     //輸入正確
@@ -33,14 +34,18 @@ void GMSStateMenu::Update(){
                 AddComponents();
                 break;
             case 4:
+                //edit
+
+                break;
+            case 5:
                 //delete
                 DeleteComponent();
                 break;
-            case 5:
+            case 6:
                 //group
             this->gms->SwitchToOtherMenu(TextMenuKey::GroupMenuKey);  //透過key 切換到其他選單->去Group選單
                 break;
-            case 6:
+            case 7:
                 //redo
                 if(this->gms->Redo()){
                     cout << "Redo Successfully" <<endl;
@@ -49,7 +54,7 @@ void GMSStateMenu::Update(){
                     cout << "Can't Redo" <<endl;
                 }
                 break;
-            case 7:
+            case 8:
                 //undo
                 if(this->gms->Undo()){
                     cout << "Undo Successfully" <<endl;
@@ -58,7 +63,7 @@ void GMSStateMenu::Update(){
                     cout << "Can't Undo" <<endl;
                 }
                 break;
-            case 8:
+            case 9:
                 //display
 
                 //component
@@ -67,7 +72,7 @@ void GMSStateMenu::Update(){
                 //group
                 DisplayGroups();
                 break;
-            case 9:
+            case 10:
                 //back
                 this->gms->SwitchToOtherMenu(TextMenuKey::HomeMenuKey);  //透過key 切換到其他選單->回到HomeMenu的選單
                 break;
@@ -97,7 +102,7 @@ int GMSStateMenu::GetComponentInput(){
 }
 void GMSStateMenu::AddComponents(){
     cout << "Select component type" << endl;
-    cout << "[1]Cube [2]Pyramid [3]Sphere" << endl;
+    cout << "[1]Cube [2]Pyramid [3]Sphere [4]Line" << endl;
     cout << "> " ;
 
     //取得Componenet的Type與Name
@@ -136,18 +141,48 @@ void GMSStateMenu::DeleteComponent(){
     }
 
 }
+
+bool GMSStateMenu::SelectEditItem(int editId){
+    return false;
+}
+
+void GMSStateMenu::EditComponent(){
+    string input;
+    int editId,choice;
+    cout << "Input Component ID:" <<endl;
+    cout << "> " ;
+
+    cin >> input;
+    cin.ignore(INT_MAX,'\n');
+    editId = atoi(input.c_str());
+
+    bool isExist =gms->GetComponents().CheckIDHasBeenExisted(editId);
+    if(isExist){
+        cout << "Select item or Return to Menu:" <<endl;
+        cout << "> ";
+        cin >> input;
+        cin.ignore(INT_MAX,'\n');
+        choice = atoi(input.c_str());
+ //尚未
+    }
+
+
+
+}
 //用來轉換成文字
 string GMSStateMenu::GetComponentType(int type){
     if(type == ComponentType::SphereType)
         return "Sphere";
     else if(type ==ComponentType::PyramidType)
         return "Pyramid";
+    else if(type ==ComponentType::CubeType)
+        return "Cibe";
     else
-        return "Cube";
+        return "Line";
 }
 //顯示Components的資料
 void GMSStateMenu::DisplayComponents(){
-    vector<Component*> components = this->gms->GetComponents();
+    vector<Component*> components = this->gms->GetComponents().GetAllComponent();
     cout << "Components:" << endl;
     cout << "------------------------------------------------------" <<endl;
     cout << "   Type   |   ID    |    Name    " <<endl;

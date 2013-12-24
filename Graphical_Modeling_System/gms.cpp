@@ -36,7 +36,7 @@ int GMS::LoadXMLFormatRecord(string path){
     int code =xmlManager.CheckFilePathIsExisted(path);
     //如果檔案存在
     if(code == XMLErrorCode::OK){
-        components.ClearComponents(); //清除原先的Components
+        components.ClearAll(); //清除原先的Components
         groups.ClearAllGroup(); //清除原先的Group
         cmdManager.ClearCmd(); //清除指令(重新開始)
         code = xmlManager.LoadXML(path,&components,&groups);
@@ -70,8 +70,8 @@ bool GMS::DeleteComponent(int id){
     return false; //沒有刪除掉 因為不存在
 }
 //取得所有Components
-vector<Component*> GMS::GetComponents(){
-    return this->components.GetComponts();
+Components GMS::GetComponents(){
+    return this->components;
 }
 //取得目前生產的ComponentsID
 int GMS::GetCurrentComponentMakerID(){
