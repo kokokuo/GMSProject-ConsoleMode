@@ -18,4 +18,6 @@ INPUT(
 ./release\commandManager.o
 ./release\addNewGroupCommand.o
 ./release\addMembersToGroupCommand.o
+./release\editComponentTypeCommand.o
+./release\editComponentNameCommand.o
 );

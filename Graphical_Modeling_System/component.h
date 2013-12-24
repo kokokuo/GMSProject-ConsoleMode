@@ -27,7 +27,8 @@ public:
     int GetID(); //取得ID
     string GetType(); //取得Type
     string GetName(); //取得名稱
-
+    void SetName(string name); //設定名稱
+    void SetComponentType(string type); //設定類型
 private:
     int id;
     string type;

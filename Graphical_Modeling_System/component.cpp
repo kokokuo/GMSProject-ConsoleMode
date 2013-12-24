@@ -29,4 +29,9 @@ string Component::GetName(){
 string Component::GetType(){
     return this->type;
 }
-
+void Component::SetName(string name){
+    this->name = name;
+}
+void Component::SetComponentType(string type){
+    this->type = type;
+}

@@ -18,4 +18,6 @@ INPUT(
 ./debug\commandManager.o
 ./debug\addNewGroupCommand.o
 ./debug\addMembersToGroupCommand.o
+./debug\editComponentTypeCommand.o
+./debug\editComponentNameCommand.o
 );
