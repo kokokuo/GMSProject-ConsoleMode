@@ -1,4 +1,5 @@
 #include "component.h"
+#include "group.h"
 
 //ComponentType靜態類別參數設定
 int ComponentType::CubeType =1;

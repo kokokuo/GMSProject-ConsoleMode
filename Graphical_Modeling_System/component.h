@@ -2,8 +2,11 @@
 #define COMPONENT_H
 
 #include <string>
+#include <vector>
 
 using namespace std;
+
+class Group;
 
 class ComponentType{
 public:
@@ -21,6 +24,10 @@ class Component
 public:
     //加入編號，類型，與元件名稱
     Component(int id, string componentType, string name);
+    //加入MemberToGroup時,要建立連結
+    void AddGroup(Group* );
+    //復原時,要移除連結
+    void RemoveGroup(Group* );
     //copy constructor
     Component(Component &c);
     ~Component(){}
@@ -33,6 +40,7 @@ private:
     int id;
     string type;
     string name;
+    vector<Group*> GroupsAddedComponent; //紀錄有加入此Component的Group記憶體位址
 };
 
 #endif // COMPONENT_H

@@ -41,21 +41,8 @@ void Group::AddMembers(vector<int> members){
     for(vector<int>::iterator it = members.begin();it != members.end();it++){
         this->membersId.push_back((*it));
     }
+    SortMembersById();
 
-    //排序
-    int temp;
-    for (unsigned int i = 1; i < membersId.size(); i++)
-    {
-        for (unsigned int j = 0; j < membersId.size() - i; j++)
-        {
-            if (membersId[j] > membersId[j + 1])
-            {
-                temp = membersId[j];
-                membersId[j] = membersId[j + 1];
-                membersId[j + 1] = temp;
-            }
-        }
-    }
 }
 //判斷memberID有無存在
 bool Group::CheckMemberHasBeenExisted(int memberId){
@@ -75,4 +62,34 @@ void Group::RemoveMembers(vector<int> wantToRemoveId){
             }
         }
     }
+}
+void Group::SortMembersById(){
+    //排序
+    int temp;
+    for (unsigned int i = 1; i < membersId.size(); i++)
+    {
+        for (unsigned int j = 0; j < membersId.size() - i; j++)
+        {
+            if (membersId[j] > membersId[j + 1])
+            {
+                temp = membersId[j];
+                membersId[j] = membersId[j + 1];
+                membersId[j + 1] = temp;
+            }
+        }
+    }
+
+}
+void Group::AddSingleMember(int member){
+    this->membersId.push_back(member);
+    SortMembersById();
+}
+void Group::RemoveSingleMember(int removeId){
+    for(vector<int>::iterator it = membersId.begin();it != membersId.end();it++){
+        if((*it) == removeId ){
+            membersId.erase(it);
+            break;
+        }
+    }
+
 }

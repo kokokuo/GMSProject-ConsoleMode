@@ -24,14 +24,21 @@ public:
     string GetMembersIdByStringFormat();
     //加入成員
     void AddMembers(vector<int> members);
+    //加入單一成員 用在回復砍掉Component時用
+    void AddSingleMember(int member);
     //確認MemberID是否存在
     bool CheckMemberHasBeenExisted(int memberId);
     //移除成員
     void RemoveMembers(vector<int> wantToRemoveId);
+    //用在Delete Component時連帶移除Group中
+    void RemoveSingleMember(int removeId);
+
 private:
     int id;
     string groupName;
     vector<int> membersId;
+    //排序Id
+    void SortMembersById();
 };
 
 #endif // GROUP_H
