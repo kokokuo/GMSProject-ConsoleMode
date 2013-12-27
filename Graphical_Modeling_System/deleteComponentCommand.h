@@ -5,6 +5,7 @@
 #include <string>
 #include "components.h"
 #include "component.h"
+#include "gmsModel.h"
 using namespace std;
 
 //刪除Components的指令
@@ -12,7 +13,7 @@ class DeleteComponentCommand : public Command
 {
 public:
     //建構子 取得執行指令所需的資料
-    DeleteComponentCommand(Components *components, int id);
+    DeleteComponentCommand(GMSModel* model, int id);
     ~DeleteComponentCommand();
     //執行指令
     void execute();
@@ -23,8 +24,8 @@ private:
     Component* removedComponent;
     //要移除的ID
     int removedId;
-    //取得Components(Receiver)用來操作
-    Components* components;
+    //取得Components(Receiver)用來操作(透過Model)
+    GMSModel* model;
 };
 
 #endif // DELETECOMPONENTCOMMAND_H

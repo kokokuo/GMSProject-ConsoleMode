@@ -20,4 +20,5 @@ INPUT(
 ./release\addMembersToGroupCommand.o
 ./release\editComponentTypeCommand.o
 ./release\editComponentNameCommand.o
+./release\gmsModel.o
 );

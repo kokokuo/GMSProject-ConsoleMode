@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     addNewGroupCommand.cpp \
     addMembersToGroupCommand.cpp \
     editComponentTypeCommand.cpp \
-    editComponentNameCommand.cpp
+    editComponentNameCommand.cpp \
+    gmsModel.cpp
 
 HEADERS += \
     gms.h \
@@ -57,4 +58,5 @@ HEADERS += \
     addNewGroupCommand.h \
     addMembersToGroupCommand.h \
     editComponentTypeCommand.h \
-    editComponentNameCommand.h
+    editComponentNameCommand.h \
+    gmsModel.h

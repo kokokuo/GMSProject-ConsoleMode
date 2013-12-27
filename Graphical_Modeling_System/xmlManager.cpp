@@ -25,7 +25,7 @@ int XMLManager::SaveXML(string fileName, Components components, Groups groups){
     //創建檔案
     xmlFile.open(fileName.c_str(),ios::out);
     if(xmlFile.is_open()){
-        AddComponentAndGroupToXMLFile(components.GetAllComponent(),groups.GetGroups());
+        AddComponentAndGroupToXMLFile(components.GetAllComponent(),groups.GetAllGroups());
         this->xmlFilePath = fileName; //把路徑記錄下來
          xmlFile.close();
         return XMLErrorCode::OK;

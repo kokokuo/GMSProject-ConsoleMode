@@ -20,7 +20,8 @@ public:
     //取得Group
     Group* GetGroup(int groupId);
     //取得所有Group
-    map<string,Group*> GetGroups();
+    map<string,Group*> GetAllGroups();
+
     //從檔案中從檔案中加入Group
     void SetGroupsFromLoadData(Group* group);
     void ClearAllGroup();

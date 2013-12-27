@@ -13,6 +13,7 @@
 #include "xmlManager.h"
 #include "group.h"
 #include "groups.h"
+#include "gmsModel.h"
 #include "commandManager.h"
 #include "addComponentCommand.h"
 #include "deleteComponentCommand.h"
@@ -20,6 +21,7 @@
 #include "addMembersToGroupCommand.h"
 #include "editComponentNameCommand.h"
 #include "editComponentTypeCommand.h"
+
 
 using namespace std;
 
@@ -38,14 +40,14 @@ public:
     int LoadXMLFormatRecord(string path);
 
     //實作加入Components部分,id,類型,名稱
-    void AddComponents(string componentType, string componentName);
+    void AddComponentsByCommand(string componentType, string componentName);
     //編輯Component名稱
-    void EditComponentName(int id,string newName);
+    void EditComponentNameByCommand(int id,string newName);
 
     //編輯Component Type
-    void EditComponentType(int id,string newType);
+    void EditComponentTypeByCommand(int id,string newType);
     //刪除Component
-    bool DeleteComponent(int id);
+    bool DeleteComponentByCommand(int id);
 
     //取得所有Component
     Components GetComponents();
@@ -62,7 +64,7 @@ public:
     //取得產生Group到目前的最大ID
     int GetCurrentGroupMakerID();
 
-
+    void ClearCommand(); //清除指令管理員的所有指令紀錄
 
     //判斷GroupId有無存在
     bool CheckGroupHasBeenExisted(int groupId);
@@ -73,10 +75,10 @@ public:
     bool CheckMemberIDHasBeenTheGroup(int groupId,int memberId);
 
     //加入新的Group
-    void AddNewGroup(string name, vector<int> members);
+    void AddNewGroupByCommand(string name, vector<int> members);
 
     //加入members ID到Group
-    void AddMembersToGroup(int groupId,vector<int> members);
+    void AddMembersToGroupByCommand(int groupId,vector<int> members);
 
     bool Redo(); //回傳true表示執行成功,否之師失敗(可能redo到最新的指令)
     bool Undo(); //回傳true表示執行成功,反之則失敗(可能uedo到stack沒資料)
@@ -84,11 +86,10 @@ private:
 
     map<int,TextStateMenu*> textMenuManager; //記錄所有選單的物件
     TextStateMenu *currentTextMenu; //切換至要執行的選單指標
-    Components components; //記錄所有的Components
     bool isWorking; //判斷GMS系痛是否在執行中的變數
-    XMLManager xmlManager; //實際負責XML所有部分的操作,被GMS系統擁有,調用
-    Groups groups; //紀錄Groups
     CommandManager cmdManager; //Invoker :指令處理管理員,負責執行個指令與紀錄指令做redo與undo
+
+    GMSModel model;
 };
 
 #endif // GMS_H

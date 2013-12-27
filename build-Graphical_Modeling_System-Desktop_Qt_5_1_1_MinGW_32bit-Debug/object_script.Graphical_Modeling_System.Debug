@@ -20,4 +20,5 @@ INPUT(
 ./debug\addMembersToGroupCommand.o
 ./debug\editComponentTypeCommand.o
 ./debug\editComponentNameCommand.o
+./debug\gmsModel.o
 );

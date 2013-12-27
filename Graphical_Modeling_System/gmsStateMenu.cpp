@@ -116,7 +116,7 @@ void GMSStateMenu::AddComponents(){
     //顯示加入的資料
     cout << "A components of " << GetComponentType(choice) << " added, name:" << componentName << ", ID: " << gms->GetCurrentComponentMakerID() <<endl;
     //透過GMS實作加入Component
-    this->gms->AddComponents(GetComponentType(choice),componentName);
+    this->gms->AddComponentsByCommand(GetComponentType(choice),componentName);
 
 
 }
@@ -132,7 +132,7 @@ void GMSStateMenu::DeleteComponent(){
     cin.ignore(INT_MAX,'\n');
     deleteId = atoi(input.c_str());
 
-    bool isExist = gms->DeleteComponent(deleteId);
+    bool isExist = gms->DeleteComponentByCommand(deleteId);
     if(isExist){
         cout << "The component '" << deleteId << "' has been deleted" << endl;
     }
@@ -187,14 +187,14 @@ void GMSStateMenu::EditComponent(){
         case 1:
             //進入編輯ID的Type選項
             type = ChooseEditComponentType();
-            gms->EditComponentType(editId,GetComponentType(type));
+            gms->EditComponentTypeByCommand(editId,GetComponentType(type));
             cout << "Type edit success.";
             break;
         case 2:
             //編輯名稱
             cout << "Input new name:" <<endl;
             getline(cin,editName);
-            gms->EditComponentName(editId,editName);
+            gms->EditComponentNameByCommand(editId,editName);
             cout << "Name edit success.";
             break;
         case 3:

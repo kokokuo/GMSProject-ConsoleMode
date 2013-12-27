@@ -112,7 +112,7 @@ void GroupStateMenu::AddNewGroup(){
 
     //給予加入成功的回饋
     cout << "The new group '" << inputGroupName << "' has been created, ID:" << ss.str() << ",members:" << inputMemberStr <<endl;
-    gms->AddNewGroup(inputGroupName,wantAddMembersId);
+    gms->AddNewGroupByCommand(inputGroupName,wantAddMembersId);
 
 
 }
@@ -190,7 +190,7 @@ void GroupStateMenu::AddMembersToGroup(){
         }while(notExistComponentsID.size() != 0 || hasExistedGroupComponentId.size() >0 );
 
         //加入新Members
-        gms->AddMembersToGroup(inputGroupId,wantAddMembersId);
+        gms->AddMembersToGroupByCommand(inputGroupId,wantAddMembersId);
 
         //給予加入成功的回饋
         cout << "Components of ";

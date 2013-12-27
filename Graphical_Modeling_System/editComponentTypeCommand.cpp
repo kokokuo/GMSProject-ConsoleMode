@@ -1,8 +1,8 @@
 #include "editComponentTypeCommand.h"
 
-EditComponentTypeCommand::EditComponentTypeCommand(Components *components, int editId, string editNewComponentType)
+EditComponentTypeCommand::EditComponentTypeCommand(GMSModel* model, int editId, string editNewComponentType)
 {
-    this->components = components;
+    this->model = model;
     this->editId = editId;
     this->editNewComponentType = editNewComponentType;
 }
@@ -10,13 +10,9 @@ EditComponentTypeCommand::~EditComponentTypeCommand(){
 
 }
 void EditComponentTypeCommand::execute(){
-    //執行編輯Name
-    Component* wantEditComponent = components->GetComponentById(editId);
-    this->originalType = wantEditComponent->GetType();
-    wantEditComponent->SetComponentType(this->editNewComponentType);
+    this->originalType = model->EditComponentType(editId,editNewComponentType);
+
 }
 void EditComponentTypeCommand::unexecute(){
-    //移除執行編輯Name
-    Component* wantEditComponent = components->GetComponentById(editId);
-    wantEditComponent->SetComponentType(this->originalType);
+    model->UnDoEditComponentType(editId,originalType);
 }

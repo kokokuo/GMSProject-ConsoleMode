@@ -4,7 +4,6 @@
 GMS::GMS()
 {
     isWorking = true;
-
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::HomeMenuKey,new HomeStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GMSMenuKey,new GMSStateMenu(this)));
     this->textMenuManager.insert(map<int,TextStateMenu*>::value_type(TextMenuKey::GroupMenuKey,new GroupStateMenu(this)));
@@ -29,116 +28,104 @@ void GMS::SwitchToOtherMenu(int Key){
 
 //把components 與groups存入檔案
 int GMS::SaveXMLFormatRecord(string path){
-    return xmlManager.SaveXML(path,components,groups);
+    return model.SaveXMLFormatRecord(path);
 }
 //載入components與groups
 int GMS::LoadXMLFormatRecord(string path){
-    int code =xmlManager.CheckFilePathIsExisted(path);
-    //如果檔案存在
+    int code = model.LoadXMLFormatRecord(path);
     if(code == XMLErrorCode::OK){
-        components.ClearAll(); //清除原先的Components
-        groups.ClearAllGroup(); //清除原先的Group
-        cmdManager.ClearCmd(); //清除指令(重新開始)
-        code = xmlManager.LoadXML(path,&components,&groups);
+        cmdManager.ClearCmd();
     }
     return code;
-
-
-
-
 }
 
-void GMS::EditComponentName(int id, string newName){
-    EditComponentNameCommand *editNameCmd = new EditComponentNameCommand(&components,id,newName);
+void GMS::EditComponentNameByCommand(int id, string newName){
+    EditComponentNameCommand *editNameCmd = new EditComponentNameCommand(&model,id,newName);
     cmdManager.execute(editNameCmd);
 }
-void GMS::EditComponentType(int id, string newType){
-    EditComponentTypeCommand *editTypeCmd = new EditComponentTypeCommand(&components,id,newType);
+void GMS::EditComponentTypeByCommand(int id, string newType){
+    EditComponentTypeCommand *editTypeCmd = new EditComponentTypeCommand(&model,id,newType);
     cmdManager.execute(editTypeCmd);
 
 }
-void GMS::AddComponents(string componentType, string componentName){
+void GMS::AddComponentsByCommand(string componentType, string componentName){
 
     //使用Command加入
-    AddComponentCommand* addCmd = new AddComponentCommand(&components,componentType,componentName);
+    AddComponentCommand* addCmd = new AddComponentCommand(&model,componentType,componentName);
     cmdManager.execute(addCmd);
 
-    //Component *component = new Component(components.GetCurrentGeneratedComponentID(),componentType,componentName);
-    //components.AddComponentToList(component);
-    //components.AddComponentID();
 }
 //刪除Component與判斷有無存在
-bool GMS::DeleteComponent(int id){
-    if(this->components.CheckIDHasBeenExisted(id)){
+bool GMS::DeleteComponentByCommand(int id){
+    if(this->model.GetComponents().CheckIDHasBeenExisted(id)){
         //使用Command刪除
-        DeleteComponentCommand* delCmd = new DeleteComponentCommand(&components,id);
+        DeleteComponentCommand* delCmd = new DeleteComponentCommand(&model,id);
         cmdManager.execute(delCmd);
-        //this->components.DeleteComponentFromList(id);
+
         return true; //告知有刪除掉
     }
     return false; //沒有刪除掉 因為不存在
 }
 //取得所有Components
 Components GMS::GetComponents(){
-    return this->components;
+    return this->model.GetComponents();
 }
 //取得目前生產的ComponentsID
 int GMS::GetCurrentComponentMakerID(){
-    return this->components.GetCurrentGeneratedComponentID();
+    return this->model.GetComponents().GetCurrentGeneratedComponentID();
 }
 //取得目前生產的GroupID
 int GMS::GetCurrentGroupMakerID(){
-    return this->groups.GetCurrentGeneratedGroupId();
+    return this->model.GetGroups().GetCurrentGeneratedGroupId();
 }
 
 //判斷group有無存在
 bool GMS::CheckGroupHasBeenExisted(int groupId){
-    return this->groups.CheckGroupHasBeenExisted(groupId);
+    return this->model.GetGroups().CheckGroupHasBeenExisted(groupId);
 }
 
 //判斷這個ComponentID有無存在Components
 bool GMS::CheckComponentIDHasBeenExisted(int id){
-    return this->components.CheckIDHasBeenExisted(id);
+    return this->model.GetComponents().CheckIDHasBeenExisted(id);
 }
 //取得所有Group
 map<string,Group*> GMS::GetGroups(){
-    return groups.GetGroups();
+    return this->model.GetGroups().GetAllGroups();
 }
 
 
 //判斷這個MemberId是否存在指定的groupId(使用前請先透過 CheckGroupHasBeenExisted判斷Group有無存在)
 bool GMS::CheckMemberIDHasBeenTheGroup(int groupId, int memberId){
-    Group* g =  groups.GetGroup(groupId);
+    Group* g =  this->model.GetGroups().GetGroup(groupId);
     return  g->CheckMemberHasBeenExisted(memberId);
 
 }
 //加入新的Group
-void GMS::AddNewGroup(string name, vector<int> members){
+void GMS::AddNewGroupByCommand(string name, vector<int> members){
     //使用Command加入新的Group
-    AddNewGroupCommand* addGroupCmd = new AddNewGroupCommand(&groups,name,members);
+    AddNewGroupCommand* addGroupCmd = new AddNewGroupCommand(&model,name,members);
     cmdManager.execute(addGroupCmd);
-    //stringstream ss;
-    //ss << "G" << groups.GetCurrentGeneratedGroupId(); //轉換成GID 作為map的Key值
-    //Group* newGroup = new Group(groups.GetCurrentGeneratedGroupId(),name,members);
-    //groups.AddGroup(ss.str(),newGroup);
-    //groups.AddGroupID();
+
 }
 
 //取得想要的Group
 Group* GMS::FindGroupByGroupId(int groupId){
-    return groups.GetGroup(groupId);
+    return this->model.GetGroups().GetGroup(groupId);
 
 }
 //加入members ID到Group
-void GMS::AddMembersToGroup(int groupId, vector<int> members){
+void GMS::AddMembersToGroupByCommand(int groupId, vector<int> members){
     //使用Command加入Members到指定的Group
-    AddMembersToGroupCommand* addMembersCmd = new AddMembersToGroupCommand(&groups,groupId,members);
+    AddMembersToGroupCommand* addMembersCmd = new AddMembersToGroupCommand(&model,groupId,members);
     cmdManager.execute(addMembersCmd);
-    //groups.AddMembersToGroup(groupId,members);
+
 }
 bool GMS::Redo(){
    return cmdManager.redo();
 }
 bool GMS::Undo(){
    return cmdManager.undo();
+}
+void GMS::ClearCommand(){
+   cmdManager.ClearCmd();
 }

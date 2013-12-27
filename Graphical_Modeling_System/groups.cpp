@@ -36,7 +36,7 @@ Group* Groups::GetGroup(int groupId){
 
 }
 //取得所有Group
-map<string,Group*> Groups::GetGroups(){
+map<string,Group*> Groups::GetAllGroups(){
     return this->groups;
 }
 //清除所有Group

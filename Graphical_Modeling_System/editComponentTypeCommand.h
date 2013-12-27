@@ -5,12 +5,14 @@
 #include <string>
 #include "components.h"
 #include "component.h"
+#include "gmsModel.h"
+
 using namespace std;
 
 class EditComponentTypeCommand : public Command
 {
 public:
-    EditComponentTypeCommand(Components* components,int editId,string editNewComponentType);
+    EditComponentTypeCommand(GMSModel* model,int editId,string editNewComponentType);
     ~EditComponentTypeCommand();
     //執行指令
     void execute();
@@ -18,8 +20,8 @@ public:
     void unexecute();
 private:
 
-    //取得Components(Receiver)用來操作
-    Components* components;
+    //取得Components(Receiver)用來操作(By Model)
+    GMSModel* model;
     //要修改成的Type
     string editNewComponentType;
     string originalType; //原來的Type
