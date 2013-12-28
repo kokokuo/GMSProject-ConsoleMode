@@ -118,7 +118,7 @@ void GMSModel::AddNewGroup(int* addedId,string name, vector<int> addMembers){
     if(*addedId ==0)
        *addedId = this->groups.GetCurrentGeneratedGroupId(); //等於0表示尚未加入Componenet(如此判斷下次加入回去才不會影響ID
     stringstream ss;
-    ss << "G" << addedId; //轉換成GID 作為map的Key值
+    ss << "G" << *addedId; //轉換成GID 作為map的Key值
     Group* newGroup = new Group(*addedId,name,addMembers);
     this-> groups.AddGroup(ss.str(),newGroup);
     //累加GroupID

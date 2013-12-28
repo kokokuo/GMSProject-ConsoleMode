@@ -42,7 +42,7 @@ public:
     void UnDoDeleteComponent(Component *removedComponent);
 
     //加入新的Group
-    void AddNewGroup(int *addedId, string name, vector<int> addMembers);
+    void AddNewGroup(int* addedId, string name, vector<int> addMembers);
     //復原加入新的Group
     void UnDoAddNewGroup(int addedId);
 
