@@ -3,8 +3,7 @@ GMSProject
 **Introduction:**
 
 This is Communication Software Design course homework project called *GMSProject* when I was M.S. student, I develop this project following TA homework slide around 2 week.
-
-(This homework slides have a lot of logic slide ,but have to follow...)   
+   
 
 **Developerment Enviroment:**
 
